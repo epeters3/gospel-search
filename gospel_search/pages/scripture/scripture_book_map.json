@@ -20,6 +20,16 @@
   "moro": { "volume": "bofm", "n_ch": 10, "names": ["Moroni", "Moro."] },
   "moses": { "volume": "pgp", "n_ch": 8, "names": ["Moses"] },
   "abr": { "volume": "pgp", "n_ch": 5, "names": ["Abraham", "Abr."] },
+  "js-m": {
+    "volume": "pgp",
+    "n_ch": 1,
+    "names": ["Joseph Smith—Matthew", "JS—M"]
+  },
+  "js-h": {
+    "volume": "pgp",
+    "n_ch": 1,
+    "names": ["Joseph Smith—History", "JS—H"]
+  },
   "a-of-f": {
     "volume": "pgp",
     "n_ch": 1,
@@ -51,7 +61,11 @@
   "ps": { "volume": "ot", "n_ch": 150, "names": ["Psalm", "Ps."] },
   "prov": { "volume": "ot", "n_ch": 31, "names": ["Proverbs", "Prov."] },
   "eccl": { "volume": "ot", "n_ch": 12, "names": ["Ecclesiastes", "Eccl."] },
-  "song": { "volume": "ot", "n_ch": 8, "names": ["Song of Solomon", "Song."] },
+  "song": {
+    "volume": "ot",
+    "n_ch": 8,
+    "names": ["Song of Solomon", "Song.", "Song"]
+  },
   "isa": { "volume": "ot", "n_ch": 66, "names": ["Isaiah", "Isa."] },
   "jer": { "volume": "ot", "n_ch": 52, "names": ["Jeremiah", "Jer."] },
   "lam": { "volume": "ot", "n_ch": 5, "names": ["Lamentations", "Lam."] },

@@ -11,6 +11,9 @@ from gospel_search.utils import logger
 
 def get_soup(url: str) -> BeautifulSoup:
     page = requests.get(url)
+    # Raise exception for 4xx or 5xx HTTP codes.
+    page.raise_for_status()
+
     return BeautifulSoup(page.content, features="lxml")
 
 

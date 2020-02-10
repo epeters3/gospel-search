@@ -32,21 +32,20 @@ def get_all_chapter_urls() -> t.List[str]:
     return urls
 
 
-def parse_url_ch_verses_str(s: str) -> t.Tuple[str, t.List[str]]:
+def parse_url_ch_verses_str(s: str) -> t.Tuple[str, t.Iterable[str]]:
     """
-    Parse Chapter/Verse strings of the format `5.13-18` (chapter
-    5, verses 13 through 18). This is how they are formatted in
-    scripture URLs.
+    Parse Chapter/Verse strings as they exist in scripture reference
+    URLs.
     """
     ch, verse_str = s.split(".")
-    if "-" in verse_str:
-        # Multiple verses are referenced (e.g. "6-8"). Make a list of
-        # all the verses in the range specified by `verse_str`.
-        startv, endv = verse_str.split("-")
-        verses = [str(i) for i in range(int(startv), int(endv) + 1)]
-    else:
-        # Only one verse is referenced.
-        verses = [verse_str]
+    # Capture all single verse references in the string e.g. "6,9,21".
+    verses = {m.groups()[0] for m in re.finditer(r"(?<!-|\d)(\d+)(?!-|\d)", verse_str)}
+    # Capture all range verse references in the string e.g. "6-8".
+    # Make a list of all the verses in the range specified by `verse_str`.
+    verse_ranges = [m.groups() for m in re.finditer(r"(\d+)-(\d+)", verse_str)]
+    for startv, endv in verse_ranges:
+        for verse in range(int(startv), int(endv) + 1):
+            verses.add(str(verse))
     return ch, verses
 
 
@@ -76,7 +75,10 @@ def parse_scripture_verses_url(url: str) -> t.List[str]:
     # Filter out the cruft.
     path = [s for s in path if s not in ["", "study"]]
     if len(path) != 4:
-        logger.warning(f"{path} was not of length 4 as expected, skipping...")
+        logger.warning(
+            f"scripture verses url '{path}' was not of "
+            "length 4 as expected, skipping..."
+        )
         return []
 
     ch_verses_str = path[3]  # e.g. "3.8-9" (ch. 3, verses 8-9)
@@ -108,13 +110,21 @@ def parse_canonical_scriptures_ref(ref: str) -> t.List[str]:
     a scripture.
     """
     # Parse the scripture reference into book, chapter, and verse(s).
-    matches = re.match(r"^([\da-zA-Z&\s\.]+)\s(\d+):(\d+)-?(\d+)?", ref,)
+    matches = re.match(r"^([\da-zA-Z&\s\.]+)\s(\d+):(\d+)[-–]?(\d+)?", ref)
 
     if matches is None:
         return []
 
     # `ref` contains a scripture reference.
     book, ch, startv, endv = matches.groups()
+
+    if book not in book_name_to_work:
+        logger.warning(
+            f"book '{book}' was not recognized as "
+            "a valid scripture book name, skipping..."
+        )
+        return []
+
     if endv is None:
         # This is a reference for just one scripture.
         return [canonical_scripture_ref_to_id(book, ch, startv)]

@@ -5,8 +5,31 @@ from gospel_search.pages.utils import get_all_urls_matching_query
 from gospel_search.pages.config import ALL_CONFERENCES_URL, CHURCH_ROOT_URL
 
 
+def is_conference_talk_url(url: str) -> bool:
+    parsed = urlparse(url)
+    path = parsed.path.split("/")
+    if path[1] != "study":
+        return False
+    if path[2] != "general-conference":
+        return False
+    if len(path[3]) != 4:
+        # We assume this is not a conference year
+        return False
+    if len(path[4]) != 2:
+        # We assume this is not a conference month
+        return False
+    if path[-2] == "media":
+        # This is likely a link to media associated
+        # with the conference session, and not a talk
+        return False
+    return True
+
+
 CONFERENCE_SESSION_LINK_QUERY = {"class": "year-line__link"}
-CONFERENCE_TALK_LINK_QUERY = {"class": "lumen-tile__link"}
+CONFERENCE_TALK_LINK_QUERY = {
+    "class": "lumen-tile__link",
+    "href": is_conference_talk_url,
+}
 
 
 def parse_conference_talk_url(url: str) -> t.Dict[str, t.Any]:

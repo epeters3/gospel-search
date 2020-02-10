@@ -9,7 +9,6 @@ from gospel_search.pages.utils import (
     get_content_body,
     get_related_content,
     find_scripture_refs,
-    get_normalized_text,
 )
 from gospel_search.pages.scripture.utils import parse_scripture_verses_url
 from gospel_search.pages.conference.utils import parse_conference_talk_url

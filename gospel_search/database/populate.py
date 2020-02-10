@@ -2,6 +2,7 @@ import typing as t
 import math
 
 from fire import Fire
+import requests
 
 from gospel_search.pages.conference.utils import (
     get_all_conference_session_urls,
@@ -15,7 +16,7 @@ from gospel_search.database.segment import write_segments
 from gospel_search.utils import logger
 
 
-def write_all_conference_talks(batch_size: int, limit: t.Optional[int]):
+def write_all_conference_talks(batch_size: int, limit: t.Optional[int], verbose: bool):
     """
     Grabs ALL conference talks from the church's website, parses
     them, and writes each paragraph of each talk to the database.
@@ -30,13 +31,26 @@ def write_all_conference_talks(batch_size: int, limit: t.Optional[int]):
             talk_exists = parent_doc_exists(talk_url, "general-conference")
             logger.debug(f"'{talk_url}' exists: {talk_exists}")
             if not talk_exists:
-                talk = ConferenceTalk(talk_url)
-                logger.info(talk)
-                write_segments(talk.to_segments(), batch_size)
-                n_written += 1
+                try:
+                    try:
+                        talk = ConferenceTalk(talk_url)
+                    except requests.exceptions.HTTPError as e:
+                        logger.warning(
+                            f"'{talk_url}' returned with {e.response}, skipping..."
+                        )
+                        continue
+                    write_segments(talk.to_segments(), batch_size)
+                    if verbose:
+                        logger.info(talk)
+                    n_written += 1
+                except Exception as e:
+                    logger.error(f"failed to process and persist '{talk_url}'")
+                    raise e
 
 
-def write_all_scripture_chapters(batch_size: int, limit: t.Optional[int]) -> None:
+def write_all_scripture_chapters(
+    batch_size: int, limit: t.Optional[int], verbose: bool
+) -> None:
     """
     Grabs ALL scripture chapters from the church's website, parses
     them, and writes each verse of each chapter to the database.
@@ -48,10 +62,21 @@ def write_all_scripture_chapters(batch_size: int, limit: t.Optional[int]) -> Non
         ch_exists = parent_doc_exists(chapter_url, "scriptures")
         logger.debug(f"'{chapter_url}' exists: {ch_exists}")
         if not ch_exists:
-            chapter = Chapter(chapter_url)
-            logger.info(chapter)
-            write_segments(chapter.to_segments(), batch_size)
-            n_written += 1
+            try:
+                try:
+                    chapter = Chapter(chapter_url)
+                except requests.exceptions.HTTPError as e:
+                    logger.warning(
+                        f"'{chapter_url}' returned with {e.response}, skipping..."
+                    )
+                    continue
+                write_segments(chapter.to_segments(), batch_size)
+                if verbose:
+                    logger.info(chapter)
+                n_written += 1
+            except Exception as e:
+                logger.error(f"failed to process and persist '{chapter_url}'")
+                raise e
 
 
 def populate(
@@ -59,6 +84,7 @@ def populate(
     overwrite: bool = False,
     limit: t.Optional[int] = None,
     log_level: str = "INFO",
+    verbose: bool = False,
 ) -> None:
     """
     Writes all conference talks and all scriptures to the database.
@@ -80,15 +106,19 @@ def populate(
     log_level
         The level to set logging to. One of
         `["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]`.
+    verbose
+        If `True`, general info about each talk or chapter will be outputted
+        after each successful parse.
     """
     if overwrite:
         # Delete all segments in the collection.
+        logger.info("deleteing all documents in the segments collection...")
         db.segments.delete_many({})
 
     logger.setLevel(log_level)
     sub_limit = math.ceil(limit / 2) if limit is not None else None
-    write_all_conference_talks(batch_size, sub_limit)
-    write_all_scripture_chapters(batch_size, sub_limit)
+    # write_all_conference_talks(batch_size, sub_limit, verbose)
+    write_all_scripture_chapters(batch_size, sub_limit, verbose)
 
 
 if __name__ == "__main__":

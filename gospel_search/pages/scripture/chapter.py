@@ -3,13 +3,13 @@ import unicodedata
 
 from bs4 import BeautifulSoup, NavigableString
 
+from gospel_search.utils import logger
 from gospel_search.database.segment import Segment, Segmentable
 from gospel_search.pages.utils import (
     get_soup,
     get_content_body,
     get_related_content,
     find_scripture_refs,
-    get_normalized_text,
 )
 from gospel_search.pages.scripture.utils import (
     parse_scripture_chapter_url,
@@ -60,6 +60,7 @@ class Chapter(Segmentable):
     VERSES_IN_BODY_QUERY = {"name": "p", "class": "verse"}
 
     def __init__(self, ch_url: str) -> None:
+        logger.info(f"processing '{ch_url}'...")
         self.url = ch_url
         self.soup = get_soup(self.url)
         attrs = parse_scripture_chapter_url(self.url)
