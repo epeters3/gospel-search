@@ -1,5 +1,6 @@
 beautifulsoup4
 pymongo
+elasticsearch 
 requests
 fire
 colorlog
