@@ -4,7 +4,7 @@ import unicodedata
 from bs4 import BeautifulSoup, NavigableString
 
 from gospel_search.utils import logger
-from gospel_search.database.segment import Segment, Segmentable
+from gospel_search.mongodb.segment import Segment, Segmentable
 from gospel_search.pages.utils import (
     get_soup,
     get_content_body,

@@ -12,7 +12,7 @@ from gospel_search.pages.utils import (
 )
 from gospel_search.pages.scripture.utils import parse_scripture_verses_url
 from gospel_search.pages.conference.utils import parse_conference_talk_url
-from gospel_search.database.segment import Segment, Segmentable
+from gospel_search.mongodb.segment import Segment, Segmentable
 from gospel_search.utils import logger
 
 
