@@ -14,13 +14,13 @@ class Segment:
 
     def __init__(
         self,
+        *,
         _id: str,
         doc_type: "str",
         text: str,
+        name: str,
         links: t.List[str],
-        parent_doc: t.Union[str, int],
-        work: t.Union[str, int],
-        volume: t.Union[str, int],
+        **other_props,
     ) -> None:
         """
         Parameters
@@ -31,23 +31,24 @@ class Segment:
             One of `["general-conference", "scriptures"]`. What type of segment it is.
         text:
             The actual text of the segment.
+        name:
+            The segment's human readable name. For a scripture, this would be something
+            like "1 Nephi 12:3". For a conference talk, this would be something like
+            "The Joy of Spiritual Survival" (the name of the conference talk).
         links:
             A list of `_id`s of other segments that this segment links to.
-        parent_doc:
-            The chapter number or conference talk name the segment is a part of.
-        work:
-            The book or conference month the segment is a part of.
-        volume:
-            The volume of scripture or conference year the segment is a part of.
+        **other_props:
+            The other properties that will be set on the segment. These can vary by
+            segment type like chapter, work, and volume for a scripture segment, or
+            talk, month, year for a conference talk paragraph.
         """
         self.d = {
             "_id": _id,
             "doc_type": doc_type,
             "text": text,
+            "name": name,
             "links": links,
-            "parent_doc": parent_doc,
-            "work": work,
-            "volume": volume,
+            **other_props,
         }
 
 
@@ -68,9 +69,8 @@ class Segmentable(ABC):
         raise NotImplementedError
 
 
-def write_segments(segments: t.List[Segment], batch_size: int) -> None:
+def write_segments(segments: t.List[Segment]) -> None:
     """
-    Writes `segments` to the database, writing as many as
-    `batch_size` at a time on each db call.
+    Writes `segments` to the database all as one batch.
     """
     db.segments.insert_many([segment.d for segment in segments])

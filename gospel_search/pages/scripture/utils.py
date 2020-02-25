@@ -58,8 +58,8 @@ def parse_scripture_chapter_url(url: str) -> t.Dict[str, t.Any]:
     return {
         "id": "/" + "/".join(path),
         "volume": path[1],
-        "work": path[2],
-        "parent_doc": int(path[3]),
+        "book_id": path[2],
+        "ch": int(path[3]),
     }
 
 

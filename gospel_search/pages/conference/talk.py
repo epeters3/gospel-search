@@ -5,7 +5,6 @@ import unicodedata
 from bs4 import BeautifulSoup, NavigableString
 
 from gospel_search.pages.utils import (
-    get_soup,
     get_content_body,
     get_related_content,
     find_scripture_refs,
@@ -14,6 +13,7 @@ from gospel_search.pages.scripture.utils import parse_scripture_verses_url
 from gospel_search.pages.conference.utils import parse_conference_talk_url
 from gospel_search.mongodb.segment import Segment, Segmentable
 from gospel_search.utils import logger
+from gospel_search.pages.page import Page
 
 
 class Paragraph:
@@ -66,10 +66,10 @@ class ConferenceTalk(Segmentable):
     AUTHOR_QUERYS = [{"id": "author1"}, {"id": "p1"}]
     PARAGRAPHS_IN_BODY_QUERY = {"name": "p"}
 
-    def __init__(self, talk_url: str) -> None:
-        logger.info(f"processing '{talk_url}'...")
-        self.url = talk_url
-        self.soup = get_soup(self.url)
+    def __init__(self, page: Page) -> None:
+        logger.info(f"processing {page._id}...")
+        self.url = page._id
+        self.soup = BeautifulSoup(page.html, features="lxml")
 
         attrs = parse_conference_talk_url(self.url)
         self.id: str = attrs["id"]
@@ -110,13 +110,14 @@ class ConferenceTalk(Segmentable):
     def to_segments(self) -> t.List[Segment]:
         return [
             Segment(
-                f"{self.id}.{i+1}",
-                "general-conference",
-                p.text,
-                p.links,
-                self.url_name,
-                self.month,
-                self.year,
+                _id=f"{self.id}.{i+1}",
+                doc_type="general-conference",
+                text=p.text,
+                name=self.name,
+                links=p.links,
+                talk_id=self.url_name,
+                month=self.month,
+                year=self.year,
             )
             for i, p in enumerate(self.paragraphs)
         ]

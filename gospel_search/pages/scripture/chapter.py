@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup, NavigableString
 from gospel_search.utils import logger
 from gospel_search.mongodb.segment import Segment, Segmentable
 from gospel_search.pages.utils import (
-    get_soup,
     get_content_body,
     get_related_content,
     find_scripture_refs,
@@ -15,6 +14,7 @@ from gospel_search.pages.scripture.utils import (
     parse_scripture_chapter_url,
     book_map,
 )
+from gospel_search.pages.page import Page
 
 
 class Verse:
@@ -59,16 +59,18 @@ class Chapter(Segmentable):
 
     VERSES_IN_BODY_QUERY = {"name": "p", "class": "verse"}
 
-    def __init__(self, ch_url: str) -> None:
-        logger.info(f"processing '{ch_url}'...")
-        self.url = ch_url
-        self.soup = get_soup(self.url)
+    def __init__(self, page: Page) -> None:
+        logger.info(f"processing {page._id}...")
+        self.url = page._id
+        self.soup = BeautifulSoup(page.html, features="lxml")
+
         attrs = parse_scripture_chapter_url(self.url)
         self.id: str = attrs["id"]
         self.volume: str = attrs["volume"]
-        self.work: str = attrs["work"]
-        self.name: str = book_map[self.work]["names"][0]
-        self.ch: int = attrs["parent_doc"]
+        self.book_id: str = attrs["book_id"]
+        self.ch: int = attrs["ch"]
+        self.book_name: str = book_map[self.book_id]["names"][0]
+
         self._set_segments()
 
     def _set_segments(self) -> None:
@@ -86,13 +88,14 @@ class Chapter(Segmentable):
     def to_segments(self) -> t.List[Segment]:
         return [
             Segment(
-                f"{self.id}.{i+1}",
-                "scriptures",
-                v.text,
-                v.links,
-                self.ch,
-                self.work,
-                self.volume,
+                _id=f"{self.id}.{i+1}",
+                doc_type="scriptures",
+                text=v.text,
+                name=f"{self.book_name} {self.ch}:{i+1}",
+                links=v.links,
+                chapter=self.ch,
+                book_id=self.book_id,
+                volume=self.volume,
             )
             for i, v in enumerate(self.verses)
         ]
