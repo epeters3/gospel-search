@@ -68,6 +68,7 @@ def get_all_talk_urls_for_conference_session(session_url: str) -> t.List[str]:
     )
 
 
-def get_conference_talks(syear: int, smonth: int, eyear: int, emonth: int):
-    # TODO if needed.
-    raise NotImplementedError
+def get_all_conference_talk_urls() -> t.Iterable[str]:
+    for session_url in get_all_conference_session_urls():
+        for talk_url in get_all_talk_urls_for_conference_session(session_url):
+            yield talk_url
