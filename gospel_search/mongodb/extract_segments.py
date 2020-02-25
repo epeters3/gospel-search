@@ -20,13 +20,12 @@ def extract_segments(
     each segment.
     """
     n_written = 0
+    logger.setLevel(log_level)
 
     if overwrite:
         # Delete all segments in the collection.
         logger.info("deleting all documents in the segments collection...")
         db.segments.delete_many({})
-
-    logger.setLevel(log_level)
 
     for page_dict in db.pages.find({}):
         if limit is not None and n_written >= limit:

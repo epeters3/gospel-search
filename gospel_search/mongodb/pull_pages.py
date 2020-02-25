@@ -60,12 +60,13 @@ def pull_pages(
         The level to set logging to. One of
         `["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]`.
     """
+    logger.setLevel(log_level)
+
     if overwrite:
         # Delete all HTML pages in the collection.
         logger.info("deleting all documents in the pages collection...")
         db.pages.delete_many({})
 
-    logger.setLevel(log_level)
     sub_limit = math.ceil(limit / 2) if limit is not None else None
     existing_doc_ids = set(doc["_id"] for doc in db.pages.find({}, {"_id": 1}))
 
