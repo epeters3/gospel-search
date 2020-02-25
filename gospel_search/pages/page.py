@@ -14,13 +14,14 @@ class Page:
         """
         `doc_type` is the document type, one of `["general-conference", "scriptures"]`.
         """
-        logger.info(f"pulling '{_id}'...")
         self._id = _id
         self.doc_type = doc_type
         if html is None:
+            logger.info(f"pulling '{_id}'...")
             res = requests.get(self._id)
             # Raise exception for 4xx or 5xx HTTP codes.
             res.raise_for_status()
+            res.encoding = "utf-8"
             self.html = res.text
         else:
             self.html = html

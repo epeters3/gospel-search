@@ -62,7 +62,7 @@ def pull_pages(
     """
     if overwrite:
         # Delete all HTML pages in the collection.
-        logger.info("deleteing all documents in the pages collection...")
+        logger.info("deleting all documents in the pages collection...")
         db.pages.delete_many({})
 
     logger.setLevel(log_level)
