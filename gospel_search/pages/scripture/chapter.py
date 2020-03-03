@@ -89,9 +89,11 @@ class Chapter(Segmentable):
         return [
             Segment(
                 _id=f"{self.id}.{i+1}",
+                parent_id=self.id,
+                num=(i + 1),
                 doc_type="scriptures",
                 text=v.text,
-                name=f"{self.book_name} {self.ch}:{i+1}",
+                name=f"{self.book_name} {self.ch}",
                 links=v.links,
                 chapter=self.ch,
                 book_id=self.book_id,

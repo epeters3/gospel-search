@@ -111,6 +111,8 @@ class ConferenceTalk(Segmentable):
         return [
             Segment(
                 _id=f"{self.id}.{i+1}",
+                parent_id=self.id,
+                num=(i + 1),
                 doc_type="general-conference",
                 text=p.text,
                 name=self.name,

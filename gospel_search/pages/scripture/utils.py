@@ -56,7 +56,7 @@ def parse_scripture_chapter_url(url: str) -> t.Dict[str, t.Any]:
     path = [s for s in path if s not in ["", "study"]]
     assert len(path) == 4, f"chapter url path is length {len(path)}, expected length 4"
     return {
-        "id": "/" + "/".join(path),
+        "id": url,
         "volume": path[1],
         "book_id": path[2],
         "ch": int(path[3]),

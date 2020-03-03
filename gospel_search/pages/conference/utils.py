@@ -48,7 +48,7 @@ def parse_conference_talk_url(url: str) -> t.Dict[str, t.Any]:
     talk_id = path[3]
 
     return {
-        "id": "/" + "/".join(path),
+        "id": url,
         "volume": int(year),
         "work": int(month),
         # The name of the talk as it exists in the talk's url

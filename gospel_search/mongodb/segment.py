@@ -16,6 +16,8 @@ class Segment:
         self,
         *,
         _id: str,
+        parent_id: str,
+        num: int,
         doc_type: "str",
         text: str,
         name: str,
@@ -27,6 +29,11 @@ class Segment:
         ----------
         _id:
             The human readable id that globally identifies this segment.
+        parent_id:
+            The URL of the segment's parent (i.e. conference talk or scripture chapter)
+            document.
+        num:
+            The verse number or conference talk paragraph number.
         doc_type:
             One of `["general-conference", "scriptures"]`. What type of segment it is.
         text:
@@ -44,6 +51,8 @@ class Segment:
         """
         self.d = {
             "_id": _id,
+            "parent_id": parent_id,
+            "num": num,
             "doc_type": doc_type,
             "text": text,
             "name": name,
