@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
-from gospel_search.pages.conference.utils import parse_conference_talk_url
-from gospel_search.pages.scripture.utils import parse_scripture_chapter_url
+from gospel_search.web_scraping.conference.utils import parse_conference_talk_url
+from gospel_search.web_scraping.scripture.utils import parse_scripture_chapter_url
 from gospel_search.utils import logger
 
 client = MongoClient()

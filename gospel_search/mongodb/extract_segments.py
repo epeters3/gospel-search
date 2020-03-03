@@ -4,9 +4,9 @@ from fire import Fire
 
 from gospel_search.utils import logger
 from gospel_search.mongodb.client import db
-from gospel_search.pages.conference.talk import ConferenceTalk
-from gospel_search.pages.scripture.chapter import Chapter
-from gospel_search.pages.page import Page
+from gospel_search.web_scraping.conference.talk import ConferenceTalk
+from gospel_search.web_scraping.scripture.chapter import Chapter
+from gospel_search.web_scraping.page import Page
 from gospel_search.mongodb.segment import write_segments
 
 

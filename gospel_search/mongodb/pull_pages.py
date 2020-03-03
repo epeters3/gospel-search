@@ -5,9 +5,9 @@ from fire import Fire
 import requests
 
 from gospel_search.utils import logger
-from gospel_search.pages.conference.utils import get_all_conference_talk_urls
-from gospel_search.pages.scripture.utils import get_all_chapter_urls
-from gospel_search.pages.page import Page
+from gospel_search.web_scraping.conference.utils import get_all_conference_talk_urls
+from gospel_search.web_scraping.scripture.utils import get_all_chapter_urls
+from gospel_search.web_scraping.page import Page
 from gospel_search.mongodb.client import db
 
 
