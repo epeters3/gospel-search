@@ -1,7 +1,11 @@
 import typing as t
 from abc import ABC, abstractmethod
+from collections import defaultdict
+
+from tqdm import tqdm
 
 from gospel_search.mongodb.client import db
+from gospel_search.utils import logger
 
 
 class Segment:
@@ -83,3 +87,48 @@ def write_segments(segments: t.List[Segment]) -> None:
     Writes `segments` to the database all as one batch.
     """
     db.segments.insert_many([segment.d for segment in segments])
+
+
+def get_segments_by_document() -> t.Dict[str, dict]:
+    """
+    Collects all segments for each conference talk or scripture chapter into a
+    single document, returning all documents as items in a dictionary, mapped
+    from their document id.
+    """
+    segments_collection = db.segments
+    documents: t.Dict[str, dict] = defaultdict(lambda: {"segments": []})
+
+    logger.info("preprocessing segments into documents...")
+    for segment in tqdm(segments_collection.find(), total=segments_collection.count()):
+        # These fields will not go in the top-level document.
+        segment_id = segment.pop("_id")
+        num = segment.pop("num")
+        text = segment.pop("text")
+        links = segment.pop("links")
+
+        document = documents[segment["parent_id"]]
+        document["segments"].append(
+            # Keep only the data at the segment level that is unique to the segment.
+            {"num": num, "text": text, "_id": segment_id, "links": links}
+        )
+
+        # The remaining data in segment should go in the top-level document.
+        for k, v in segment.items():
+            # sanity check as we add this data to the document to make
+            # sure we're not adding multiple segments to the same
+            # document with differing document-level information.
+            if k in document and document[k] != v:
+                raise ValueError(
+                    f"different value {v} found for the same key {k} in "
+                    f"document {document} (original value {document[k]})"
+                )
+            document[k] = v
+
+    for document in documents.values():
+        # Rename the id field to the correct name,
+        # since above we had to keep it what the segments call it.
+        document["_id"] = document.pop("parent_id")
+        # Sort the segments of each document to make sure they're in order.
+        document["segments"].sort(key=lambda s: s["num"])
+
+    return documents
