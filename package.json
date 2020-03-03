@@ -1,0 +1,29 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next gospel_search/nextjs",
+    "build": "next build gospel_search/nextjs",
+    "start": "next start gospel_search/nextjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epeters3/gospel-search.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/epeters3/gospel-search/issues"
+  },
+  "homepage": "https://github.com/epeters3/gospel-search#readme",
+  "dependencies": {
+    "next": "^9.2.2",
+    "node-fetch": "^2.6.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  }
+}
