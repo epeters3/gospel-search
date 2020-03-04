@@ -6,3 +6,8 @@ fire
 colorlog
 lxml
 tqdm
+flask
+sentence-transformers
+nltk
+numpy
+scipy

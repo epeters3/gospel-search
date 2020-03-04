@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 
 from tqdm import tqdm
+import numpy as np
 
 from gospel_search.mongodb.client import db
 from gospel_search.utils import logger
@@ -89,7 +90,7 @@ def write_segments(segments: t.List[Segment]) -> None:
     db.segments.insert_many([segment.d for segment in segments])
 
 
-def get_segments_by_document() -> t.Dict[str, dict]:
+def get_segments_by_document(*, include_embeddings: bool = False) -> t.Dict[str, dict]:
     """
     Collects all segments for each conference talk or scripture chapter into a
     single document, returning all documents as items in a dictionary, mapped
@@ -105,12 +106,24 @@ def get_segments_by_document() -> t.Dict[str, dict]:
         num = segment.pop("num")
         text = segment.pop("text")
         links = segment.pop("links")
+        embedding = segment.pop("embedding")
 
         document = documents[segment["parent_id"]]
-        document["segments"].append(
-            # Keep only the data at the segment level that is unique to the segment.
-            {"num": num, "text": text, "_id": segment_id, "links": links}
-        )
+        # Keep only the data at the segment level that is unique to the segment.
+        segment_data_to_keep = {
+            "num": num,
+            "text": text,
+            "_id": segment_id,
+            "links": links,
+        }
+        if include_embeddings:
+            # Mongodb stores the embedding as a raw list, not a numpy array.
+            try:
+                segment_data_to_keep["embedding"] = np.fromiter(embedding, np.float)
+            except Exception as e:
+                logger.error(segment_data_to_keep)
+                raise e
+        document["segments"].append(segment_data_to_keep)
 
         # The remaining data in segment should go in the top-level document.
         for k, v in segment.items():
