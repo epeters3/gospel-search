@@ -122,6 +122,9 @@ class ConferenceTalk(Segmentable):
                 year=self.year,
             )
             for i, p in enumerate(self.paragraphs)
+            # There is an empty paragraph here and there, like in
+            # the church's statistical reports.
+            if p.text != "" and p.text != " "
         ]
 
     def __str__(self) -> str:

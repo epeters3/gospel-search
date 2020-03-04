@@ -5,6 +5,7 @@ import os
 import json
 
 from gospel_search.web_scraping.config import SCRIPTURES_ROOT_URL
+from gospel_search.web_scraping.utils import remove_query_string
 from gospel_search.utils import logger
 
 # Maps scripture book ids like `dc` to their attributes
@@ -56,7 +57,7 @@ def parse_scripture_chapter_url(url: str) -> t.Dict[str, t.Any]:
     path = [s for s in path if s not in ["", "study"]]
     assert len(path) == 4, f"chapter url path is length {len(path)}, expected length 4"
     return {
-        "id": url,
+        "id": remove_query_string(url),
         "volume": path[1],
         "book_id": path[2],
         "ch": int(path[3]),

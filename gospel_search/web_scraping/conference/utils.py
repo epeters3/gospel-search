@@ -1,7 +1,10 @@
 import typing as t
 from urllib.parse import urlparse
 
-from gospel_search.web_scraping.utils import get_all_urls_matching_query
+from gospel_search.web_scraping.utils import (
+    get_all_urls_matching_query,
+    remove_query_string,
+)
 from gospel_search.web_scraping.config import ALL_CONFERENCES_URL, CHURCH_ROOT_URL
 
 
@@ -48,7 +51,7 @@ def parse_conference_talk_url(url: str) -> t.Dict[str, t.Any]:
     talk_id = path[3]
 
     return {
-        "id": url,
+        "id": remove_query_string(url),
         "volume": int(year),
         "work": int(month),
         # The name of the talk as it exists in the talk's url

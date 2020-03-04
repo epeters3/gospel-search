@@ -1,5 +1,6 @@
 import typing as t
 import unicodedata
+from urllib import parse
 
 import requests
 from bs4 import BeautifulSoup
@@ -38,6 +39,14 @@ def get_all_urls_matching_query(
     """
     soup = get_soup(dest_url)
     return [root + tag["href"] for tag in soup.find_all("a", query)]
+
+
+def remove_query_string(url: str) -> str:
+    parsed = parse.urlparse(url)
+    parsed_no_query = parse.ParseResult(
+        parsed.scheme, parsed.netloc, parsed.path, parsed.params, "", parsed.fragment
+    )
+    return parse.urlunparse(parsed_no_query)
 
 
 def get_content_body(soup: BeautifulSoup) -> BeautifulSoup:
