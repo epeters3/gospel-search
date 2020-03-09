@@ -101,46 +101,23 @@ def get_segments_by_document(*, include_embeddings: bool = False) -> t.Dict[str,
 
     logger.info("preprocessing segments into documents...")
     for segment in tqdm(segments_collection.find(), total=segments_collection.count()):
-        # These fields will not go in the top-level document.
-        segment_id = segment.pop("_id")
-        num = segment.pop("num")
-        text = segment.pop("text")
-        links = segment.pop("links")
-        embedding = segment.pop("embedding")
-
         document = documents[segment["parent_id"]]
-        # Keep only the data at the segment level that is unique to the segment.
-        segment_data_to_keep = {
-            "num": num,
-            "text": text,
-            "_id": segment_id,
-            "links": links,
-        }
         if include_embeddings:
             # Mongodb stores the embedding as a raw list, not a numpy array.
             try:
-                segment_data_to_keep["embedding"] = np.fromiter(embedding, np.float)
+                segment["embedding"] = np.fromiter(segment["embedding"], np.float)
             except Exception as e:
-                logger.error(segment_data_to_keep)
+                logger.error(segment)
                 raise e
-        document["segments"].append(segment_data_to_keep)
+        else:
+            segment.pop("embedding")
 
-        # The remaining data in segment should go in the top-level document.
-        for k, v in segment.items():
-            # sanity check as we add this data to the document to make
-            # sure we're not adding multiple segments to the same
-            # document with differing document-level information.
-            if k in document and document[k] != v:
-                raise ValueError(
-                    f"different value {v} found for the same key {k} in "
-                    f"document {document} (original value {document[k]})"
-                )
-            document[k] = v
+        document["segments"].append(segment)
 
-    for document in documents.values():
-        # Rename the id field to the correct name,
-        # since above we had to keep it what the segments call it.
-        document["_id"] = document.pop("parent_id")
+    for doc_id, document in documents.items():
+        # Store the document's id in the document itself so the
+        # document can be fully self-contained.
+        document["_id"] = doc_id
         # Sort the segments of each document to make sure they're in order.
         document["segments"].sort(key=lambda s: s["num"])
 

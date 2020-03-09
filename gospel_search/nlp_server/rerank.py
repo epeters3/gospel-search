@@ -38,12 +38,14 @@ class Reranker:
         # ranked documents, returning the segments sorted by score, but
         # not the embedding vectors, because those are large and not needed.
         ranked_segments = []
-        for _id in ranked_ids:
-            doc = self.documents[_id]
+        for doc_id in ranked_ids:
+            doc = self.documents[doc_id]
             for segment in doc["segments"]:
                 score = self.embedder.similarity(query_embedding, segment["embedding"])
                 ranked_segments.append(
                     {
+                        # Don't return the embedding to the user; it's really big and
+                        # they don't need it.
                         **{k: v for k, v in segment.items() if k != "embedding"},
                         "score": score,
                     }
