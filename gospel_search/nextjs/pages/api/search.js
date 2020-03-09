@@ -20,7 +20,7 @@ const getElasticSearchResults = async query => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       _source: ["_id"], // we only get the _id field back
-      size: 5, // only return the top 5 results
+      size: 10, // only return the top 5 results
       query: {
         match: { "segments.text": query }
       }
@@ -46,6 +46,7 @@ const getRerankingResults = async (query, ranked_ids) => {
 export default async (req, res) => {
   const { query } = req.body;
   if (req.method === "POST") {
+    console.log(query);
     const ranked_ids = await getElasticSearchResults(query);
     const results = await getRerankingResults(query, ranked_ids);
     res.status(200).json(results);
