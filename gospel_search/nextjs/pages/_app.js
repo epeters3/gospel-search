@@ -1,4 +1,5 @@
 import App from "next/app";
+import Head from "next/head";
 import React from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
@@ -49,6 +50,9 @@ export default class MyApp extends App {
     return (
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        <Head>
+          <title>Gospel Search</title>
+        </Head>
         <Page>
           <Main>
             <Component {...pageProps} />
