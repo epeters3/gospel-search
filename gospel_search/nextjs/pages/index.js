@@ -16,6 +16,7 @@ const Input = styled.input`
 
 const SubmitBtn = styled.input`
   border: none;
+  cursor: pointer;
 `;
 
 class Index extends React.Component {

@@ -5,23 +5,41 @@ const Container = styled.div`
   margin-top: ${p => p.theme.size.xl};
 `;
 
-const Text = styled.p`
+const H4 = styled.h4`
   margin-bottom: ${p => p.theme.size.xs};
 `;
 
-const SegmentNumber = styled.b`
+const Text = styled.p`
+  margin: ${p => p.theme.size.xs} 0;
+`;
+
+const VerseNumber = styled.b`
   margin-right: ${p => p.theme.size.xs};
 `;
 
-const SearchResult = ({ _id, links, num, score, text }) => (
+const SearchResult = ({
+  _id,
+  doc_type,
+  links,
+  month,
+  name,
+  num,
+  parent_id,
+  score,
+  talk_id,
+  text,
+  year
+}) => (
   <Container>
     <Text>
-      <SegmentNumber> {num}</SegmentNumber>
+      <H4>
+        <a href={parent_id}>
+          {doc_type == "scriptures" ? `${name}:${num}` : name}
+        </a>
+      </H4>
+      {doc_type == "scriptures" ? <VerseNumber> {num}</VerseNumber> : null}
       {text}
     </Text>
-    <i>
-      (source: <a href={_id}>{_id}</a>)
-    </i>
   </Container>
 );
 

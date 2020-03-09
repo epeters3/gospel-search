@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Page = styled.div`
-  max-width: 900px;
+  max-width: 800px;
   min-height: 100vh;
 `;
 
