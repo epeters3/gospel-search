@@ -8,11 +8,11 @@ from gospel_search.mongodb.segment import Segment, Segmentable
 from gospel_search.web_scraping.utils import (
     get_content_body,
     get_related_content,
-    find_scripture_refs,
 )
 from gospel_search.web_scraping.scripture.utils import (
     parse_scripture_chapter_url,
     book_map,
+    find_scripture_refs,
 )
 from gospel_search.web_scraping.page import Page
 

@@ -7,9 +7,11 @@ from bs4 import BeautifulSoup, NavigableString
 from gospel_search.web_scraping.utils import (
     get_content_body,
     get_related_content,
+)
+from gospel_search.web_scraping.scripture.utils import (
+    parse_scripture_verses_url,
     find_scripture_refs,
 )
-from gospel_search.web_scraping.scripture.utils import parse_scripture_verses_url
 from gospel_search.web_scraping.conference.utils import parse_conference_talk_url
 from gospel_search.mongodb.segment import Segment, Segmentable
 from gospel_search.utils import logger
