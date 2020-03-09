@@ -46,7 +46,7 @@ class Index extends React.Component {
     <>
       <Form onSubmit={this.handleSubmit}>
         <Input
-          placeholder="Search gospel content..."
+          placeholder="Search scriptures and conference talks..."
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
