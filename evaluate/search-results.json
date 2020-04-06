@@ -1,0 +1,223 @@
+[
+  {
+    "name": "Exact Matching",
+    "query": "I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days.",
+    "nResults": { "me": 5, "them": 2 },
+    "results": [
+      {
+        "id": "https://www.churchofjesuschrist.org/study/scriptures/bofm/1-ne/1.1",
+        "rank": { "me": 0, "them": 0, "gold": 0 },
+        "text": "I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days.",
+        "relevance": 100
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2000/04/because-my-father-sent-me?lang=eng.3",
+        "rank": { "me": 2, "them": 1, "gold": 1 },
+        "text": "The history of the gospel of Jesus Christ from Adam and Eve down to the present day is closely associated with father and mother and family. The introductory pages of the Book of Mormon have the great prophet Nephi, while recounting the trials and blessings of his day, first paying homage to his father: \u201cI, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days.\u201d",
+        "relevance": 90
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1997/10/the-home-a-refuge-and-sanctuary?lang=eng.2",
+        "rank": { "me": 1, "them": null, "gold": 2 },
+        "text": "As Nephi, I, too, was \u201cborn of goodly parents; therefore I was taught somewhat in all the learning of my father\u201d and have been \u201chighly favored of the Lord in all my days.\u201d",
+        "relevance": 80
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2016/10/for-our-spiritual-development-and-learning?lang=eng.17",
+        "rank": { "me": 4, "them": null, "gold": 3 },
+        "text": "In order to understand the mysteries of God, or those things that can be understood only through revelation, we must follow the example of Nephi, who said, \u201cBeing exceedingly young, nevertheless being large in stature, and also having great desires to know of the mysteries of God, wherefore, I did cry unto the Lord; and behold he did visit me, and did soften my heart that I did believe all the words which had been spoken by my father.\u201d The Lord Himself further explained that Nephi had exercised faith, sought diligently with lowliness of heart, and kept His commandments.",
+        "relevance": 10
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/scriptures/bofm/mosiah/1.6",
+        "rank": { "me": 3, "them": null, "gold": 4 },
+        "text": "O my sons, I would that ye should remember that these sayings are true, and also that these records are true. And behold, also the plates of Nephi, which contain the records and the sayings of our fathers from the time they left Jerusalem until now, and they are true; and we can know of their surety because we have them before our eyes.",
+        "relevance": 9
+      }
+    ]
+  },
+  {
+    "name": "Semantic Similarity",
+    "query": "My name is Nephi, and since my parents are good people, my Father taught me some of what he knew. I've had lots of trials during my life, but, the Lord has blessed me greatly, and I've learned a lot about how good He is, and the incredible things he does that most are not allowed to know. Because of all this, I write this book about my life.",
+    "nResults": { "me": 5, "them": 0 },
+    "results": [
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2014/10/i-know-these-things-of-myself?lang=eng.6",
+        "rank": { "me": 2, "them": null, "gold": 0 },
+        "text": "Like Alma, Nephi also came to know the truth for himself. After listening to his father speak of his many spiritual experiences, Nephi wanted to know what his father knew. This was more than simple curiosity\ufeff\u2014it was something he hungered and thirsted after. Even though he was \u201cexceedingly young,\u201d he had \u201cgreat desires to know of the mysteries of God.\u201d He yearned to \u201csee, and hear, and know of these things, by the power of the Holy Ghost.\u201d",
+        "relevance": 50
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2014/10/i-know-these-things-of-myself?lang=eng.8",
+        "rank": { "me": 0, "them": null, "gold": 1 },
+        "text": "These personal experiences with the Lord prepared Nephi for the adversity and challenges he would soon face. They enabled him to stand strong even when others in his family were struggling. He could do this because he had learned for himself and he knew for himself. He had been blessed with his own testimony.",
+        "relevance": 45
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1980/10/adversity-and-you?lang=eng.12",
+        "rank": { "me": 1, "them": null, "gold": 2 },
+        "text": "\u201cThe days in the hospital were filled with painful, sleepless hours and nights. Those nights gave me an opportunity to think about the Savior and Joseph Smith as I had never done before. I reviewed the Prophet Joseph\u2019s life from everything I had learned. He faced physical, emotional, and spiritual trial upon trial. How I marveled at his well-won victories. At this difficult time I promised the Lord I would try to accept all of my challenges as the Prophet Joseph Smith had accepted his.",
+        "relevance": 40
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2016/10/o-how-great-the-plan-of-our-god?lang=eng.24",
+        "rank": { "me": 3, "them": null, "gold": 3 },
+        "text": "Some of my friends would say that this message felt familiar, even though such things were never taught in their religious upbringing. It was as if they had always known these things to be true, as if I was simply casting light on something that was always and deeply rooted in their hearts.",
+        "relevance": 10
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2000/10/write-upon-my-heart?lang=eng.6",
+        "rank": { "me": 4, "them": null, "gold": 4 },
+        "text": "There were more than thoughts in his mind. I knew from having watched him that he had feelings in his heart. He yearned for me to be protected, to be safe. I had heard and felt that yearning in his prayers, and even more in the prayers of my mother, for all the years I had lived with them. I had learned from that, and I remembered.",
+        "relevance": 5
+      }
+    ]
+  },
+  {
+    "name": "QA",
+    "query": "How can I fully utilize the Savior's atonement?",
+    "nResults": { "me": 5, "them": 0 },
+    "results": [
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1984/10/the-gospel-and-the-church?lang=eng.24",
+        "rank": { "me": 4, "them": null, "gold": 0 },
+        "text": "The Church aids us in our effort to use our free agency creatively, not to invent our own values, principles, and interpretations, but to learn and live the eternal truths of the gospel. Gospel living is a process of continuous individual renewal and improvement until the person is prepared and qualified to enter comfortably and with confidence into the presence of God.",
+        "relevance": 20
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2012/04/aaronic-priesthood-arise-and-use-the-power-of-god?lang=eng.9",
+        "rank": { "me": 3, "them": null, "gold": 1 },
+        "text": "Dear young men of the Church, let me ask you a question that I hope you will carry in your heart for the rest of your life. What greater power can you acquire on earth than the priesthood of God? What power could possibly be greater than the capacity to assist our Heavenly Father in changing the lives of your fellowmen, to help them along the pathway of eternal happiness by being cleansed of sin and wrongdoing?",
+        "relevance": 18
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2012/04/aaronic-priesthood-arise-and-use-the-power-of-god?lang=eng.13",
+        "rank": { "me": 1, "them": null, "gold": 2 },
+        "text": "I call on every Aaronic Priesthood quorum presidency to once again raise the title of liberty and organize and lead your battalions. Utilize your priesthood power by inviting those around you to come unto Christ through repentance and baptism. You have the mandate and power of Heavenly Father to do it.",
+        "relevance": 16
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2019/04/31stevenson?lang=eng.67",
+        "rank": { "me": 0, "them": null, "gold": 3 },
+        "text": "I pray that you will make the commitment to live worthy of the holy priesthood that you bear and strive to execute your sacred role every day. I bless you with the ability and desire to do so. I add my testimony of the power of the priesthood that you hold, of living prophets, and of Jesus Christ and His role as our Savior and Redeemer. In the name of Jesus Christ, amen.",
+        "relevance": 15
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2012/04/aaronic-priesthood-arise-and-use-the-power-of-god?lang=eng.19",
+        "rank": { "me": 2, "them": null, "gold": 4 },
+        "text": "I testify to you that the power of the priesthood is real. I gained my witness exercising the priesthood myself. I have seen miracle after miracle performed by those who have the power of the Aaronic Priesthood. I have witnessed the power of the ministering of angels as faithful Aaronic Priesthood holders speak Spirit-filled words of hope, opening the heart of someone in need of light and love. In the name of Jesus Christ, our Lord, our leader, and our Savior, amen.",
+        "relevance": 10
+      }
+    ]
+  },
+  {
+    "name": "Topic Search",
+    "query": "Joy",
+    "nResults": { "me": 5, "them": 5 },
+    "results": [
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1991/10/joy-and-mercy?lang=eng.1",
+        "rank": { "me": 2, "them": null, "gold": 0 },
+        "text": "One of the greatest of all God\u2019s revelations is Father Lehi\u2019s teaching that \u201cmen are, that they might have joy.\u201d (2 Ne. 2:25.) Joy is more than happiness. Joy is the ultimate sensation of well-being. It comes from being complete and in harmony with our Creator and his eternal laws.",
+        "relevance": 70
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2017/10/value-beyond-measure?lang=eng.13",
+        "rank": { "me": null, "them": 1, "gold": 1 },
+        "text": "Despite this marvelous truth, how many of us struggle, from time to time, with negative thoughts or feelings about ourselves? I do. It\u2019s an easy trap. Satan is the father of all lies, especially when it comes to misrepresentations about our own divine nature and purpose. Thinking small about ourselves does not serve us well. Instead it holds us back. As we\u2019ve often been taught, \u201cNo one can make you feel inferior without your consent.\u201d We can stop comparing our worst to someone else\u2019s best. \u201cComparison is the thief of joy.\u201d",
+        "relevance": 68
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1987/10/overcoming-challenges-along-lifes-way?lang=eng.31",
+        "rank": { "me": null, "them": 0, "gold": 2 },
+        "text": "I recently had a note from this friend, married now in the temple with a lovely family. She says, \u201cTell the sisters that it is all worth it. Tell them how beautiful and joyful life can be when you keep the commandments.\u201d",
+        "relevance": 65
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1987/10/finding-joy-in-life?lang=eng.21",
+        "rank": { "me": 3, "them": null, "gold": 3 },
+        "text": "\u201cWith God\u2019s help, good cheer permits us to rise above the depressing present or difficult circumstances. ... It is sunshine when clouds block the light\u201d (Ensign, May 1986, p. 66). Each woman is responsible for her own happiness. Let us strive to cultivate this spirit of gladness in our homes and let it shine in our faces wherever we go.",
+        "relevance": 63
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2016/10/joy-and-spiritual-survival?lang=eng.7",
+        "rank": { "me": 0, "them": null, "gold": 4 },
+        "text": "Yes! The answer is a resounding yes! But how is that possible? And what must we do to claim the joy that Heavenly Father has in store for us?",
+        "relevance": 60
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1987/10/finding-joy-in-life?lang=eng.50",
+        "rank": { "me": 4, "them": null, "gold": 5 },
+        "text": "\u201cNow, what do we hear in the gospel which we have received? A voice of gladness! A voice of mercy from heaven; ... a voice of gladness for the living and the dead; glad tidings of great joy ... Let your hearts rejoice, and be exceedingly glad\u201d (D&C 128:19, 22).",
+        "relevance": 57
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1989/04/lord-when-saw-we-thee-an-hungred?lang=eng.29",
+        "rank": { "me": null, "them": 2, "gold": 6 },
+        "text": "Being sensitive to such needs helps everyone find joy in the precious reality of everyday living and look forward with faith to the future, knowing that sorrow and struggle and endurance to the end are necessary parts of mortality.",
+        "relevance": 55
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2016/10/joy-and-spiritual-survival?lang=eng.11",
+        "rank": { "me": 1, "them": null, "gold": 7 },
+        "text": "That\u2019s it! Saints can be happy under every circumstance. We can feel joy even while having a bad day, a bad week, or even a bad year!",
+        "relevance": 50
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2018/10/for-him?lang=eng.8",
+        "rank": { "me": null, "them": 4, "gold": 8 },
+        "text": "So whom was King Benjamin really serving? Heavenly Father and the Savior. Knowing the who and the why in serving others helps us understand that the highest manifestation of love is devotion to God.",
+        "relevance": 30
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2017/04/a-sin-resistant-generation?lang=eng.28",
+        "rank": { "me": null, "them": 3, "gold": 9 },
+        "text": "I testify that Jesus Christ leads this Church. As you teach, lead, and love children in the Savior\u2019s way, you can receive personal revelation that will aid you in creating and arming valiant, sin-resistant children. My prayer is that our children will echo the words of Nephi: \u201cWilt thou make me that I may shake at the appearance of sin?\u201d I testify that our Savior atoned for the sins of the world\ufeff\u2014because He said He would\ufeff\u2014and that He loves us more than we mere mortals can even comprehend\ufeff\u2014because He said He would. In the name of Jesus Christ, amen.",
+        "relevance": 25
+      }
+    ]
+  },
+  {
+    "name": "Keyword Search",
+    "query": "fear anxiety depression",
+    "nResults": { "me": 5, "them": 1 },
+    "results": [
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2019/10/31aburto?lang=eng.5",
+        "rank": { "me": 0, "them": null, "gold": 0 },
+        "text": "My dear sisters, it is normal to feel sad or worried once in a while. Sadness and anxiety are natural human emotions. However, if we are constantly sad and if our pain blocks our ability to feel the love of our Heavenly Father and His Son and the influence of the Holy Ghost, then we may be suffering from depression, anxiety, or another emotional condition.",
+        "relevance": 80
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1993/10/look-to-god-and-live?lang=eng.2",
+        "rank": { "me": null, "them": 0, "gold": 1 },
+        "text": "Life in every era has had its troubles. Surely the Dark Ages were appropriately named, and not one of us is anxious to be transported back even to those later years of, say, the Hundred Years\u2019 War or the Black Plague. No, we\u2019re quite happy to have been born in a century of unprecedented material blessings and abundant living; yet in community after community, in small nations and large, we see individuals and families facing heightened anxiety and fear. It would seem that discouragement, depression, and despair are our contemporary \u201cBlack Plague.\u201d Ours is, as Jesus said it would be, a time of distress with perplexity (see Luke 21:25).",
+        "relevance": 60
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2019/10/31aburto?lang=eng.3",
+        "rank": { "me": 2, "them": null, "gold": 2 },
+        "text": "Likewise damaging is the desensitizing cloud of skepticism that can affect others who have not experienced these challenges. Like any part of the body, the brain is subject to illnesses, trauma, and chemical imbalances. When our minds are suffering, it is appropriate to seek help from God, from those around us, and from medical and mental health professionals.",
+        "relevance": 53
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1994/10/make-thee-an-ark?lang=eng.4",
+        "rank": { "me": 4, "them": null, "gold": 3 },
+        "text": "Sufficient, indeed, is the evil thereof unto this day in which we live. There seems to be a rising tide of evil, a flood of iniquity spreading throughout the world. Crime and violence are increasing at an alarming rate. Fear openly stalks our streets and invades our homes.",
+        "relevance": 49
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/1993/10/look-to-god-and-live?lang=eng.23",
+        "rank": { "me": 1, "them": null, "gold": 4 },
+        "text": "One day Sister Lewis came home from a temple session weary and worried, feeling the impact of so many days\ufeff\u2014and nights\ufeff\u2014of fear being held at bay only by monumental faith.",
+        "relevance": 45
+      },
+      {
+        "id": "https://www.churchofjesuschrist.org/study/general-conference/2018/10/wilt-thou-be-made-whole?lang=eng.1",
+        "rank": { "me": 3, "them": null, "gold": 5 },
+        "text": "A few months into his mission, our youngest son and his missionary companion were completing their study when our son felt a dull pain in his head. He felt very strange; at first he lost control of his left arm; then his tongue went numb. The left side of his face began to droop. He had difficulty speaking. He knew something was wrong. What he didn\u2019t know was that he was in the middle of a massive stroke in three areas of his brain. Fear began to set in as he became partially paralyzed. How quickly a stroke victim receives care can have a dramatic effect on the extent of his healing. His faithful missionary companion acted decisively. After calling 911, he gave him a blessing. Miraculously, the ambulance was only five minutes away.",
+        "relevance": 30
+      }
+    ]
+  }
+]
