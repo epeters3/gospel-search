@@ -59,16 +59,10 @@ def get_spearman_correlation(query_results: list, system_name: str) -> float:
         return 0.0
 
     n = len(query_results)
-    return 1 - safe_divide(
-        (
-            6
-            * sum(
-                (r["rank"][system_name] - r["rank"]["gold"]) ** 2
-                for r in system_results
-            )
-        ),
-        (n * (n ** 2 - 1)),
-    )
+    return 1 - (
+        6
+        * sum((r["rank"][system_name] - r["rank"]["gold"]) ** 2 for r in system_results)
+    ) / (n * (n ** 2 - 1))
 
 
 def do_score() -> list:
