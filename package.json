@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/epeters3/gospel-search#readme",
   "dependencies": {
-    "next": "^9.2.2",
+    "next": "^12.1.0",
     "node-fetch": "^2.6.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
