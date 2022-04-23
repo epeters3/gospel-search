@@ -1,0 +1,46 @@
+services:
+
+  mongodb:
+    image: mongo
+    volumes:
+      - ../db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  mongoui:
+    image: mongo-express
+    ports:
+    - 8081:8081
+    depends_on:
+    - mongodb
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongodb
+
+  crawler:
+    image: gospel-search-crawler
+    build:
+      context: ..
+      dockerfile: dockerfiles/crawler.Dockerfile
+    depends_on:
+    - mongodb
+    environment:
+      DB_HOST: mongodb
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    command: ["python", "-m", "gospel_search.mongodb.pull_pages", "--limit", "4"]
+
+  extractor:
+    image: gospel-search-crawler
+    build:
+      context: ..
+      dockerfile: dockerfiles/crawler.Dockerfile
+    depends_on:
+    - mongodb
+    environment:
+      DB_HOST: mongodb
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    command: ["python", "-m", "gospel_search.mongodb.extract_segments"]

@@ -1,10 +1,24 @@
-Overview of directory structure:
+# Overview of directory structure:
 
 - `gospel_search/elasticsearch/`: The code related to the ElasticSearch search engine server.
 - `gospel_search/mongodb/`: The code related to the MongoDB database which stores all the segments and embedding vectors.
 - `gospel_search/nextjs`: The code for the proxy server and user interface.
 - `gospel_search/nlp_server`: The code for the NLP paragraph embedding re-ranking server.
 - `gospel_search/web_scraping`: The code for the HTML scraper.
+
+## Run Guide
+
+To crawl, pull, and save all the raw HTML documets:
+
+```
+./scripts/crawl.sh
+```
+
+To extract segments from the previously crawled raw HTML documents:
+
+```
+./scripts/extract.sh
+```
 
 To run the system locally in a Windows environment (requires powershell, Python 3, Node.js, and the Windows subsystem for Linux):
 

@@ -1,10 +1,11 @@
 from pymongo import MongoClient
 
 from gospel_search.web_scraping.conference.utils import parse_conference_talk_url
+from gospel_search.web_scraping.config import DB_HOST, DB_PASSWORD, DB_USER
 from gospel_search.web_scraping.scripture.utils import parse_scripture_chapter_url
 from gospel_search.utils import logger
 
-client = MongoClient()
+client = MongoClient(f"mongodb://{DB_USER}:{DB_PASSWORD}@{DB_HOST}")
 db = client.gospel_search
 
 
@@ -12,7 +13,7 @@ def parent_doc_exists(parent_doc_url: str, doc_type: str) -> bool:
     """
     Used to check if a scripture chapter or conference talk
     is already referenced in the database.
-    
+
     Parameters
     ----------
     parent_doc_url

@@ -65,6 +65,6 @@ def get_related_content(soup: BeautifulSoup) -> BeautifulSoup:
     related_contents = soup.select(RELATED_CONTENT_QUERY)
     assert len(related_contents) == 1, (
         f"{len(related_contents)} Related Content sections"
-        " found when only 1 was expected."
+        " found when 1 was expected."
     )
     return related_contents[0]
