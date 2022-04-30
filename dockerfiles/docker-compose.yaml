@@ -44,3 +44,18 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: password
     command: ["python", "-m", "gospel_search.mongodb.extract_segments"]
+
+  embedder:
+    image: gospel-search-embedder
+    build:
+      context: ..
+      dockerfile: dockerfiles/embedder.Dockerfile
+    depends_on:
+    - mongodb
+    volumes:
+    - ~/.cache/torch:/root/.cache/torch
+    environment:
+      DB_HOST: mongodb
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    command: ["python", "-m", "gospel_search.mongodb.compute_embeddings"]

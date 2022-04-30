@@ -22,11 +22,12 @@ def compute_embeddings(overwrite: bool = False):
             # This segment already has an embedding and we're not replacing it.
             continue
         embedding = embedder.embed_text(segment["text"])
-        segments_collection.update(
+        segments_collection.find_one_and_update(
             # The list is stored in the database as a raw list, not a numpy array.
             {"_id": segment["_id"]},
             {"$set": {"embedding": embedding.tolist()}},
         )
+    logger.info("embedding complete")
 
 
 if __name__ == "__main__":

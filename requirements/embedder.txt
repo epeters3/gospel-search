@@ -1,0 +1,9 @@
+sentence_transformers
+nltk
+numpy
+scipy
+pymongo==4.1.1
+fire
+tqdm
+beautifulsoup4
+colorlog

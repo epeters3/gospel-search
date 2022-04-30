@@ -2,7 +2,7 @@ fire
 requests
 colorlog
 beautifulsoup4
-pymongo
+pymongo==4.1.1
 lxml
 tqdm
 numpy

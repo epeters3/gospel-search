@@ -8,16 +8,22 @@
 
 ## Run Guide
 
-To crawl, pull, and save all the raw HTML documets:
+To crawl, pull, and save all the raw HTML documets to the `gospel_search.pages` collection:
 
 ```
 ./scripts/crawl.sh
 ```
 
-To extract segments from the previously crawled raw HTML documents:
+To extract segments from the previously crawled raw HTML documents and save them to the `gospel_search.segments` collection:
 
 ```
 ./scripts/extract.sh
+```
+
+To compute an embedding for each segment and add them to the `gospel_search_segments` collection:
+
+```
+./scripts/embed.sh
 ```
 
 To run the system locally in a Windows environment (requires powershell, Python 3, Node.js, and the Windows subsystem for Linux):
