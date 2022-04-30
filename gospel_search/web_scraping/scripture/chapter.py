@@ -36,6 +36,7 @@ class Verse:
             The `BeautifulSoup` object corresponding to the Related
             Content section of the talk.
         """
+        # TODO: this is not extracting any links currently.
         self.links = find_scripture_refs(v_soup, self.FOOTNOTE_LINK_QUERY, rc_soup)
 
         # Collect all the text for the verse, excluding the text
