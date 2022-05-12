@@ -1,3 +1,19 @@
+# Gospel Search
+
+Here is the 10,000 foot view of the architecture:
+
+```mermaid
+flowchart TD
+   GL[Gospel Library] -- HTML Pages --> Crawler
+   Crawler -- Segments --> MongoDB
+   MongoDB -- Segments --> Embedder
+   Embedder -- Embeddings --> MongoDB
+   MongoDB --> Importer -- Segments --> ElasticSearch
+   ElasticSearch -- Top-k segments --> ProxyServer
+   RerankerServer -- Reranked top-k segments --> ProxyServer
+   ProxyServer -- Client app/search results --> Client
+```
+
 # Overview of directory structure:
 
 - `gospel_search/elasticsearch/`: The code related to the ElasticSearch search engine server.
@@ -28,4 +44,4 @@
    ./scripts/embed.sh
    ```
 
-### TODO: left off getting nlp-server to start up successfully.
+### TODO: left off getting the next.js proxy server to start up successfully.
