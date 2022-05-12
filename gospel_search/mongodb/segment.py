@@ -100,7 +100,9 @@ def get_segments_by_document(*, include_embeddings: bool = False) -> t.Dict[str,
     documents: t.Dict[str, dict] = defaultdict(lambda: {"segments": []})
 
     logger.info("preprocessing segments into documents...")
-    for segment in tqdm(segments_collection.find(), total=segments_collection.count()):
+    for segment in tqdm(
+        segments_collection.find(), total=segments_collection.count_documents(filter={})
+    ):
         document = documents[segment["parent_id"]]
         if include_embeddings:
             # Mongodb stores the embedding as a raw list, not a numpy array.

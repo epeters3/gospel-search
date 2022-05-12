@@ -19,13 +19,31 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
       ME_CONFIG_MONGODB_SERVER: mongodb
 
+  elasticsearch:
+    image: elasticsearch:7.17.3
+    environment:
+      discovery.type: single-node
+  
+  nlp-service:
+    image: gospel-search-nlp-service
+    build:
+      context: ..
+      dockerfile: dockerfiles/nlp-service.Dockerfile
+    volumes:
+    - ~/.cache/torch:/root/.cache/torch
+    environment:
+      DB_HOST: mongodb
+      DB_USERNAME: root
+      DB_PASSWORD: password
+
+  # TODO: just define a single worker service and call it using different commands,
+  # instead of having these duplicate definitions.
+
   crawler:
     image: gospel-search-crawler
     build:
       context: ..
       dockerfile: dockerfiles/crawler.Dockerfile
-    depends_on:
-    - mongodb
     environment:
       DB_HOST: mongodb
       DB_USERNAME: root
@@ -37,8 +55,6 @@ services:
     build:
       context: ..
       dockerfile: dockerfiles/crawler.Dockerfile
-    depends_on:
-    - mongodb
     environment:
       DB_HOST: mongodb
       DB_USERNAME: root
@@ -50,8 +66,6 @@ services:
     build:
       context: ..
       dockerfile: dockerfiles/embedder.Dockerfile
-    depends_on:
-    - mongodb
     volumes:
     - ~/.cache/torch:/root/.cache/torch
     environment:
@@ -59,3 +73,15 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: password
     command: ["python", "-m", "gospel_search.mongodb.compute_embeddings"]
+
+  importer:
+    image: gospel-search-crawler
+    build:
+      context: ..
+      dockerfile: dockerfiles/crawler.Dockerfile
+    environment:
+      DB_HOST: mongodb
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      ES_HOST: http://elasticsearch:9200
+    command: ["python", "-m", "gospel_search.elasticsearch.import_segments"]

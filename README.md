@@ -8,33 +8,24 @@
 
 ## Run Guide
 
-To crawl, pull, and save all the raw HTML documets to the `gospel_search.pages` collection:
+### Step 1: Extract and index all content
 
-```
-./scripts/crawl.sh
-```
+1. To crawl, pull, and save all the raw HTML documets to the `gospel_search.pages` collection:
 
-To extract segments from the previously crawled raw HTML documents and save them to the `gospel_search.segments` collection:
+   ```
+   ./scripts/crawl.sh
+   ```
 
-```
-./scripts/extract.sh
-```
+2. To extract segments from the previously crawled raw HTML documents and save them to the `gospel_search.segments` collection:
 
-To compute an embedding for each segment and add them to the `gospel_search_segments` collection:
+   ```
+   ./scripts/extract.sh
+   ```
 
-```
-./scripts/embed.sh
-```
+3. To compute an embedding for each segment and add them to the `gospel_search_segments` collection:
 
-To run the system locally in a Windows environment (requires powershell, Python 3, Node.js, and the Windows subsystem for Linux):
+   ```
+   ./scripts/embed.sh
+   ```
 
-```powershell
-# Start the MongoDB database
-Start-Process -FilePath "<path_to_mongo_installation>\bin\mongod.exe" -ArgumentList "--dbpath=`"<path_to_mongo_data>`""
-# Start ElasticSearch (source: source: elastic.co/guide/en/elasticsearch/reference/current/zip-windows.html)
-Start-Process -FilePath "<path_to_elasticsearch_installation>\bin\elasticsearch.bat"
-# Start the NLP server
-Start-Process wsl -ArgumentList "python", "-m", "gospel_search.nlp_server"
-# Start the Node.js proxy/UI server in dev mode
-Start-Process npm -ArgumentList "run dev"
-```
+### TODO: left off getting nlp-server to start up successfully.

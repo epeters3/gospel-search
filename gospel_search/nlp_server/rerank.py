@@ -1,10 +1,6 @@
 import typing as t
 
-from scipy.spatial.distance import cosine
-from tqdm import tqdm
-
 from gospel_search.mongodb.segment import get_segments_by_document
-from gospel_search.utils import logger
 from gospel_search.nlp_server.text_embedder import TextEmbedder
 
 

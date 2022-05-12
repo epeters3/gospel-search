@@ -1,0 +1,10 @@
+fastapi
+tqdm
+numpy
+pymongo
+sentence-transformers
+nltk
+scipy
+beautifulsoup4
+colorlog
+uvicorn[standard]

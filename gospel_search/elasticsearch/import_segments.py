@@ -24,9 +24,9 @@ def import_docs(overwrite: bool = True, log_level: str = "INFO"):
 
     logger.info(f"importing '{SEGMENTS}' index from MongoDB to ElasticSearch...")
 
-    if overwrite and es_client.indices.exists(SEGMENTS):
+    if overwrite and es_client.indices.exists(index=SEGMENTS):
         logger.info("deleting all documents in the segments index...")
-        es_client.indices.delete(SEGMENTS)
+        es_client.indices.delete(index=SEGMENTS)
 
     documents = get_segments_by_document()
     for doc in documents.values():
