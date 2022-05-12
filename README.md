@@ -44,4 +44,4 @@ flowchart TD
    ./scripts/embed.sh
    ```
 
-### TODO: left off getting the next.js proxy server to start up successfully.
+### TODO: left off getting the next.js proxy server to query Elasticsearch successfully.

@@ -35,6 +35,17 @@ services:
       DB_HOST: mongodb
       DB_USERNAME: root
       DB_PASSWORD: password
+  
+  proxy-service:
+    image: gospel-search-proxy-service
+    build:
+      context: ..
+      dockerfile: dockerfiles/proxy-service.Dockerfile
+    ports:
+    - 3000:3000
+    environment:
+      ES_HOST: http://elasticsearch:9200
+      NLP_HOST: http://nlp-service:8080
 
   # TODO: just define a single worker service and call it using different commands,
   # instead of having these duplicate definitions.

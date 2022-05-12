@@ -1,10 +1,7 @@
 import fetch from "node-fetch";
 
-import getConfig from "next/config";
 
-// Only holds serverRuntimeConfig and publicRuntimeConfig
-const { serverRuntimeConfig } = getConfig();
-const { ES_HOST, NLP_HOST } = serverRuntimeConfig;
+const { ES_HOST, NLP_HOST } = process.env;
 
 const elasticSearchEndpoint = ES_HOST + "/segments/_search";
 const rerankingEndpoint = NLP_HOST + "/api/rerank";
