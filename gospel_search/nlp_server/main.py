@@ -19,6 +19,12 @@ class RerankResult(BaseModel):
     result: t.List[dict]
 
 
+@app.post("/api/refresh")
+def refresh():
+    """Refreshes the embeddings loaded into this server."""
+    reranker.refresh()
+
+
 @app.post("/api/rerank")
 def rerank(body: RerankRequest):
     result = reranker.rerank(body.query, body.ranked_ids, 10)

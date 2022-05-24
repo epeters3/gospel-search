@@ -16,6 +16,9 @@ class Reranker:
         self.documents = get_segments_by_document(include_embeddings=True)
         self.embedder = TextEmbedder()
 
+    def refresh(self):
+        self.documents = get_segments_by_document(include_embeddings=True)
+
     def rerank(self, query: str, ranked_ids: t.List[str], n: int) -> t.List[dict]:
         """
         Parameters

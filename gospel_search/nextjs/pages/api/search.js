@@ -24,6 +24,7 @@ const getElasticSearchResults = async query => {
     })
   });
   const json = await req.json();
+  console.log(json)
   // Just return an array of the document _id's.
   return json.hits.hits.map(hit => hit._id);
 };

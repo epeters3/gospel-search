@@ -7,3 +7,8 @@ fire
 tqdm
 beautifulsoup4
 colorlog
+requests
+lxml
+elasticsearch
+uvicorn
+fastapi

@@ -23,12 +23,27 @@ services:
     image: elasticsearch:7.17.3
     environment:
       discovery.type: single-node
+      http.cors.enabled: "true"
+      http.cors.allow-origin: http://elasticsearchui:1358
+      http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      http.cors.allow-credentials: "true"
+    ports:
+    - 9200:9200
+  
+  elasticsearchui:
+    image: appbaseio/dejavu:3.6.0
+    ports:
+    - 1358:1358
+    depends_on:
+      - elasticsearch
   
   nlp-service:
     image: gospel-search-nlp-service
     build:
       context: ..
       dockerfile: dockerfiles/nlp-service.Dockerfile
+    depends_on:
+    - mongodb
     volumes:
     - ~/.cache/torch:/root/.cache/torch
     environment:
@@ -41,58 +56,29 @@ services:
     build:
       context: ..
       dockerfile: dockerfiles/proxy-service.Dockerfile
+    depends_on:
+      - elasticsearch
+      - nlp-service
     ports:
     - 3000:3000
     environment:
       ES_HOST: http://elasticsearch:9200
       NLP_HOST: http://nlp-service:8080
 
-  # TODO: just define a single worker service and call it using different commands,
-  # instead of having these duplicate definitions.
-
-  crawler:
-    image: gospel-search-crawler
+  worker:
+    image: gospel-search-worker
     build:
       context: ..
-      dockerfile: dockerfiles/crawler.Dockerfile
-    environment:
-      DB_HOST: mongodb
-      DB_USERNAME: root
-      DB_PASSWORD: password
-    command: ["python", "-m", "gospel_search.mongodb.pull_pages", "--limit", "4"]
-
-  extractor:
-    image: gospel-search-crawler
-    build:
-      context: ..
-      dockerfile: dockerfiles/crawler.Dockerfile
-    environment:
-      DB_HOST: mongodb
-      DB_USERNAME: root
-      DB_PASSWORD: password
-    command: ["python", "-m", "gospel_search.mongodb.extract_segments"]
-
-  embedder:
-    image: gospel-search-embedder
-    build:
-      context: ..
-      dockerfile: dockerfiles/embedder.Dockerfile
+      dockerfile: dockerfiles/worker.Dockerfile
+    depends_on:
+      - mongodb
+      - elasticsearch
+    ports:
+    - 8080:8080
     volumes:
     - ~/.cache/torch:/root/.cache/torch
     environment:
       DB_HOST: mongodb
       DB_USERNAME: root
       DB_PASSWORD: password
-    command: ["python", "-m", "gospel_search.mongodb.compute_embeddings"]
-
-  importer:
-    image: gospel-search-crawler
-    build:
-      context: ..
-      dockerfile: dockerfiles/crawler.Dockerfile
-    environment:
-      DB_HOST: mongodb
-      DB_USERNAME: root
-      DB_PASSWORD: password
       ES_HOST: http://elasticsearch:9200
-    command: ["python", "-m", "gospel_search.elasticsearch.import_segments"]

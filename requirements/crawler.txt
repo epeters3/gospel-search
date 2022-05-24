@@ -1,9 +1,0 @@
-fire
-requests
-colorlog
-beautifulsoup4
-pymongo==4.1.1
-lxml
-tqdm
-numpy
-elasticsearch

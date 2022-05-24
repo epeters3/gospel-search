@@ -9,4 +9,4 @@ docker-compose -f dockerfiles/docker-compose.yaml up \
     --force-recreate \
     --renew-anon-volumes \
     --abort-on-container-exit \
-    mongodb mongoui elasticsearch nlp-service proxy-service
+    mongodb mongoui elasticsearch elasticsearchui nlp-service proxy-service worker
