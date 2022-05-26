@@ -10,9 +10,7 @@ from gospel_search.web_scraping.page import Page
 from gospel_search.mongodb.segment import write_segments
 
 
-def extract_segments(
-    overwrite: bool = False, limit: t.Optional[int] = None, log_level: str = "INFO"
-):
+def extract_segments(limit: t.Optional[int] = None, log_level: str = "INFO"):
     """
     Takes all conference talks and scripture chapters in the pages
     collection of the database and extracts all the segments from
@@ -22,10 +20,9 @@ def extract_segments(
     n_written = 0
     logger.setLevel(log_level)
 
-    if overwrite:
-        # Delete all segments in the collection.
-        logger.info("deleting all documents in the segments collection...")
-        db.segments.delete_many({})
+    # First delete all segments in the collection.
+    logger.info("deleting all documents in the segments collection...")
+    db.segments.delete_many({})
 
     for page_dict in db.pages.find({}):
         if limit is not None and n_written >= limit:
