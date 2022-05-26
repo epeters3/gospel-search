@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Starts the database, and an admin UI for browsing the data therein. Once started,
-# the admin UI is accessible from http://0.0.0.0:8081.
+# Starts the databases, and admin UIs for browsing the data therein. Also starts the worker.
 
 docker-compose -f dockerfiles/docker-compose.yaml up \
     --build \
     --force-recreate \
     --renew-anon-volumes \
     --abort-on-container-exit \
-    mongodb mongoui
+    mongodb mongoui elasticsearch elasticsearchui worker

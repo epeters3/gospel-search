@@ -1,3 +1,4 @@
+from datetime import datetime
 import typing as t
 from urllib.parse import urlparse
 
@@ -30,7 +31,7 @@ def is_conference_talk_url(url: str) -> bool:
 
 CONFERENCE_SESSION_LINK_QUERY = {"class": "year-line__link"}
 CONFERENCE_TALK_LINK_QUERY = {
-    "class": "lumen-tile__link",
+    "class": "list-tile",
     "href": is_conference_talk_url,
 }
 
@@ -60,9 +61,18 @@ def parse_conference_talk_url(url: str) -> t.Dict[str, t.Any]:
 
 
 def get_all_conference_session_urls() -> t.List[str]:
-    return get_all_urls_matching_query(
-        ALL_CONFERENCES_URL, CONFERENCE_SESSION_LINK_QUERY, CHURCH_ROOT_URL
-    )
+    start_year = 1971
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    urls = []
+    for year in range(start_year, current_year + 1):
+        for month in [4, 10]:
+            if year == current_year and month >= current_month:
+                # This conference may not be available yet.
+                break
+            urls.append(f"{ALL_CONFERENCES_URL}/{year}/{month:02d}")
+
+    return urls
 
 
 def get_all_talk_urls_for_conference_session(session_url: str) -> t.List[str]:
