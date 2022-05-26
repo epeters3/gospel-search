@@ -23,4 +23,4 @@ flowchart TD
 - `gospel_search/web_scraping`: The code for the HTML scraper.
 - `gospel_search/worker`: The code for the worker server which runs all the ETL tasks.
 
-### TODO: left off getting the ElasticSearch index to persist across docker restarts.
+### TODO: left off trying to retrieve the conference talk pages successfully.

@@ -21,6 +21,8 @@ services:
 
   elasticsearch:
     image: elasticsearch:7.17.3
+    volumes:
+      - ../es-db:/usr/share/elasticsearch/data
     environment:
       discovery.type: single-node
       http.cors.enabled: "true"
