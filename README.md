@@ -23,4 +23,4 @@ flowchart TD
 - `gospel_search/web_scraping`: The code for the HTML scraper.
 - `gospel_search/worker`: The code for the worker server which runs all the ETL tasks.
 
-### TODO: left off trying to retrieve the conference talk pages successfully.
+### TODO: left off making https://www.churchofjesuschrist.org/study/scriptures/ot/song/3 parse successfully in the extract stage. Error message: `AssertionError: 0 Related Content sections found when 1 was expected`
