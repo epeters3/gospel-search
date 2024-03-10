@@ -26,6 +26,13 @@ def is_conference_talk_url(url: str) -> bool:
         # This is likely a link to media associated
         # with the conference session, and not a talk
         return False
+    if "session" in path[5] or "video" in path[5]:
+        # This is likely a session landing page with no
+        # actual talk in it, or just a video with no text
+        # content written on the page i.e. not an official
+        # conference talk but just a piece of shared media,
+        # like a church video.
+        return False
     return True
 
 

@@ -5,12 +5,12 @@ import unicodedata
 from bs4 import BeautifulSoup, NavigableString
 
 from gospel_search.web_scraping.utils import (
+    bs_find,
     get_content_body,
     get_related_content,
 )
 from gospel_search.web_scraping.scripture.utils import (
     parse_scripture_verses_url,
-    find_scripture_refs,
 )
 from gospel_search.web_scraping.conference.utils import parse_conference_talk_url
 from gospel_search.mongodb.segment import Segment, Segmentable
@@ -20,10 +20,10 @@ from gospel_search.web_scraping.page import Page
 
 class Paragraph:
 
-    OLD_SCRIPTURE_LINK_QUERY = {"name": "a", "class": "scripture-ref"}
-    NEW_SCRIPTURE_LINK_QUERY = {"name": "a", "class": "note-ref"}
+    OLD_SCRIPTURE_LINK_QUERY = {"name": "a", "class_": "scripture-ref"}
+    NEW_SCRIPTURE_LINK_QUERY = {"name": "a", "class_": "note-ref"}
 
-    def __init__(self, p_soup: BeautifulSoup, rc_soup: BeautifulSoup):
+    def __init__(self, p_soup: BeautifulSoup):
         """
         Takes a BeautifulSoup object for the `<p/>` tag of
         a conference talk paragraph and processes it into
@@ -34,9 +34,6 @@ class Paragraph:
         p_soup
             The `BeautifulSoup` object corresponding to the paragraph
             in question (just the `<p/>` tag).
-        rc_soup
-            The `BeautifulSoup` object corresponding to the Related
-            Content section of the talk.
         """
         self.links: t.List[str] = []
 
@@ -45,27 +42,21 @@ class Paragraph:
         for old_anchor in p_soup.find_all(**self.OLD_SCRIPTURE_LINK_QUERY):
             self.links += parse_scripture_verses_url(old_anchor["href"])
 
-        # Capture any new-style scripture links in this paragraph where
-        # the actual scripture reference is in the "Related Content" section.
-        self.links += find_scripture_refs(
-            p_soup, self.NEW_SCRIPTURE_LINK_QUERY, rc_soup
-        )
-
         # Collect the text for the paragraph, ignoring superscript
         # footnote numbers.
         self.text = ""
         for child in p_soup.descendants:
             if isinstance(child, NavigableString):
                 if child.parent.name == "sup":
-                    if any(class_ == "marker" for class_ in child.parent["class"]):
+                    if any(class_ == "marker" for class_ in child.parent.get("class", [])):
                         continue
                 self.text += unicodedata.normalize("NFKC", child)
 
 
 class ConferenceTalk(Segmentable):
 
-    NAME_QUERY = {"id": "title1"}
-    AUTHOR_QUERYS = [{"id": "author1"}, {"id": "p1"}]
+    NAME_QUERIES = [{"name": "h1", "id": "title1"}, {"name": "h1", "id": "p1"}, {"name": "h1", "id": "p4"}, {"name": "h1", "id": "title56"}]
+    AUTHOR_QUERIES = [{"name": "p", "id": "author1"}, {"name": "p", "id": "p1"}, {"name": "p", "class_": "author-name"}]
     PARAGRAPHS_IN_BODY_QUERY = {"name": "p"}
 
     def __init__(self, page: Page) -> None:
@@ -79,16 +70,16 @@ class ConferenceTalk(Segmentable):
         self.month: int = attrs["work"]
         self.url_name: str = attrs["parent_doc"]
 
-        self.name = self.soup.find(**self.NAME_QUERY).string
+        self.name = bs_find(self.soup, *self.NAME_QUERIES).string
         self._set_author()
         self._set_segments()
 
     def _set_author(self) -> None:
-        tag = self.soup.find(**self.AUTHOR_QUERYS[0])
-        if tag is None:
-            tag = self.soup.find(**self.AUTHOR_QUERYS[1])
+        tag = bs_find(self.soup, *self.AUTHOR_QUERIES)
+        if tag is None or not tag.text:
+            raise Exception(f"Could not find conference talk author string using any known query.")
         # Keep just the author in "<By> author"
-        self.author = re.sub(r"^[B|b]y\s", "", tag.string)
+        self.author = re.sub(r"^[B|b]y\s", "", tag.text)
 
     def _set_segments(self) -> None:
         self.paragraphs: t.List[Paragraph] = []
@@ -96,16 +87,12 @@ class ConferenceTalk(Segmentable):
 
         body = get_content_body(self.soup)
 
-        # The related content section has the text corresponding
-        # to new-style link footnotes.
-        related_content = get_related_content(self.soup)
-
         p_tags = body.find_all(**self.PARAGRAPHS_IN_BODY_QUERY)
         for p in p_tags:
             if not p.parent.name == "figcaption":
                 # We don't want text that serves as the
                 # caption to a figure.
-                paragraph = Paragraph(p, related_content)
+                paragraph = Paragraph(p)
                 self.nlinks += len(paragraph.links)
                 self.paragraphs.append(paragraph)
 

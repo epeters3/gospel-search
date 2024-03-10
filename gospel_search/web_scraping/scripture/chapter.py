@@ -12,7 +12,6 @@ from gospel_search.web_scraping.utils import (
 from gospel_search.web_scraping.scripture.utils import (
     parse_scripture_chapter_url,
     book_map,
-    find_scripture_refs,
 )
 from gospel_search.web_scraping.page import Page
 
@@ -21,7 +20,7 @@ class Verse:
 
     FOOTNOTE_LINK_QUERY = {"name": "a", "class": "study-note-ref"}
 
-    def __init__(self, v_soup: BeautifulSoup, rc_soup: BeautifulSoup):
+    def __init__(self, v_soup: BeautifulSoup):
         """
         Takes a BeautifulSoup object for the `<p/>` tag of
         a scripture chapter verse and processes it into
@@ -32,12 +31,9 @@ class Verse:
         v_soup
             The `BeautifulSoup` object corresponding to the verse
             in question (just the `<p/>` tag).
-        rc_soup
-            The `BeautifulSoup` object corresponding to the Related
-            Content section of the talk.
         """
         # TODO: this is not extracting any links currently.
-        self.links = find_scripture_refs(v_soup, self.FOOTNOTE_LINK_QUERY, rc_soup)
+        self.links = []
 
         # Collect all the text for the verse, excluding the text
         # for footnote letters and verse numbers.
@@ -78,11 +74,10 @@ class Chapter(Segmentable):
         self.verses: t.List[Verse] = []
         self.nlinks = 0
         body = get_content_body(self.soup)
-        related_content = get_related_content(self.soup)
 
         verse_tags = body.find_all(**self.VERSES_IN_BODY_QUERY)
         for verse_tag in verse_tags:
-            verse = Verse(verse_tag, related_content)
+            verse = Verse(verse_tag)
             self.nlinks += len(verse.links)
             self.verses.append(verse)
 

@@ -29,6 +29,14 @@ def extract_segments(limit: t.Optional[int] = None, log_level: str = "INFO"):
             break
 
         page = Page(**page_dict)
+        if "session" in page._id:
+            logger.info(
+                f"Skipping page {page._id} because it appears to be a conference session landing page"
+            )
+            continue
+        if "video" in page._id:
+            logger.info(f"Skipping page {page._id} because it appears to be a video with no text")
+            continue
         if page.doc_type == "scriptures":
             segmentable = Chapter(page)
         elif page.doc_type == "general-conference":

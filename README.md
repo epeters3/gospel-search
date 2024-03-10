@@ -52,7 +52,6 @@ sequenceDiagram
     Proxy Server->>User: search results
 ```
 
-
 # Overview of directory structure:
 
 - `gospel_search/elasticsearch/`: The code related to the ElasticSearch search engine server.
@@ -62,4 +61,18 @@ sequenceDiagram
 - `gospel_search/web_scraping`: The code for the HTML scraper.
 - `gospel_search/worker`: The code for the worker server which runs all the ETL tasks.
 
-### TODO: left off making https://www.churchofjesuschrist.org/study/scriptures/ot/song/3 parse successfully in the extract stage. Error message: `AssertionError: 0 Related Content sections found when 1 was expected`
+### TODO
+
+The church has a new public API you can use, which looks like this:
+
+```
+curl 'https://www.churchofjesuschrist.org/study/api/v3/language-pages/type/content?lang=eng&uri=/general-conference/1971/04/life-is-eternal'
+```
+
+You can also fetch the index page for a session using e.g.:
+
+```
+curl 'https://www.churchofjesuschrist.org/study/api/v3/language-pages/type/content?lang=eng&uri=/general-conference/1971/04'
+```
+
+The `body` field has the html string with the page content. And there's a `footnotes` property.

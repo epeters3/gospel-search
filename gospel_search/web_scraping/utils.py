@@ -68,3 +68,15 @@ def get_related_content(soup: BeautifulSoup) -> BeautifulSoup:
         " found when 1 was expected."
     )
     return related_contents[0]
+
+def bs_find(soup: BeautifulSoup, *queries: dict):
+    """
+    Searches through `soup` using the given queries. The first query will be tried first. If there is no match,
+    the second query will be tried next, and so on.
+    """
+    res = None
+    for query in queries:
+        res = soup.find(**query)
+        if res is not None:
+            break
+    return res
