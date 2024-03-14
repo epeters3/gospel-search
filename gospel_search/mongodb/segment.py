@@ -107,7 +107,7 @@ def get_segments_by_document(*, include_embeddings: bool = False) -> t.Dict[str,
         if include_embeddings:
             # Mongodb stores the embedding as a raw list, not a numpy array.
             try:
-                segment["embedding"] = np.fromiter(segment["embedding"], np.float)
+                segment["embedding"] = np.fromiter(segment["embedding"], np.float32)
             except Exception as e:
                 logger.error(segment)
                 raise e
