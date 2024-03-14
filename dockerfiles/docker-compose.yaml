@@ -72,6 +72,13 @@ services:
     build:
       context: ..
       dockerfile: dockerfiles/worker.Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     depends_on:
       - mongodb
       - elasticsearch

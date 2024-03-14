@@ -1,5 +1,4 @@
 from fire import Fire
-from tqdm import tqdm
 
 from gospel_search.mongodb.client import db
 from gospel_search.nlp_server.text_embedder import TextEmbedder
@@ -17,7 +16,7 @@ def compute_embeddings(overwrite: bool = False):
     # load them all into memory at once so our MongoDB connection doesn't
     # drop part way through.
     segments = list(segments_collection.find())
-    for segment in tqdm(segments):
+    for i, segment in enumerate(segments):
         if not overwrite and "embedding" in segment:
             # This segment already has an embedding and we're not replacing it.
             continue
@@ -27,6 +26,8 @@ def compute_embeddings(overwrite: bool = False):
             {"_id": segment["_id"]},
             {"$set": {"embedding": embedding.tolist()}},
         )
+        if (i + 1) % 1000 == 0:
+            logger.info(f"uploaded {i + 1} embeddings")
     logger.info("embedding complete")
 
 
