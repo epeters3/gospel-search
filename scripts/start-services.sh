@@ -2,7 +2,7 @@
 
 # Starts the services needed to perform actual gospel library searching.
 
-docker-compose -f dockerfiles/docker-compose.yaml up \
+docker compose -f dockerfiles/docker-compose.yaml up \
     --build \
     --force-recreate \
     --renew-anon-volumes \
