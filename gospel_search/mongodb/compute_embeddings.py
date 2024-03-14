@@ -27,7 +27,7 @@ def compute_embeddings(overwrite: bool = False):
             {"$set": {"embedding": embedding.tolist()}},
         )
         if (i + 1) % 1000 == 0:
-            logger.info(f"uploaded {i + 1} embeddings")
+            logger.info(f"uploaded {i + 1}/{len(segments)} embeddings")
     logger.info("embedding complete")
 
 
