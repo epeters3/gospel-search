@@ -2,9 +2,9 @@
   "name": "gospel-search",
   "description": "",
   "scripts": {
-    "dev": "next gospel_search/nextjs",
-    "build": "next build gospel_search/nextjs",
-    "start": "next start gospel_search/nextjs",
+    "dev": "next gospel_search/ui",
+    "build": "next build gospel_search/ui",
+    "start": "next start gospel_search/ui",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
