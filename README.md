@@ -10,7 +10,7 @@ The data transformation pipeline can be started up via:
 scripts/start-db.sh
 ```
 
-HTTP requests can then be made to the worker service at `localhost:8080` to accomplish the steps outlined in the following sequence diagram:
+HTTP requests can then be made to the worker service at `http://localhost:8080` to accomplish the steps outlined in the following sequence diagram:
 
 ```mermaid
 sequenceDiagram
@@ -29,6 +29,8 @@ sequenceDiagram
     Worker->>ElasticSearch: segments
 ```
 
+**Note**: Currently the ElasticSearch index is not persisted across docker image start-ups, so `PUT /populate-es` has to be called every time ElasticSearch starts up. That command only takes 10 or so seconds to run, so its not a big deal.
+
 ## Search Engine User Experience
 
 Once the embeddings have been saved to the MongoDB instance and the segments have been loaded into the ElasticSearch instance, the search engine application stack can be started via:
@@ -37,7 +39,7 @@ Once the embeddings have been saved to the MongoDB instance and the segments hav
 scripts/start-service.sh
 ```
 
-The front-end UI can then be accessed via `localhost:3000/`. User requests are handled using this workflow:
+The front-end UI can then be accessed via `http://localhost:3000`. User requests are handled using this workflow:
 
 ```mermaid
 sequenceDiagram
@@ -61,7 +63,7 @@ sequenceDiagram
 - `gospel_search/web_scraping`: The code for the HTML scraper.
 - `gospel_search/worker`: The code for the worker server which runs all the ETL tasks.
 
-### TODO
+### Notes
 
 The church has a new public API you can use, which looks like this:
 

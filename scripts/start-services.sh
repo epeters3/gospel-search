@@ -7,4 +7,4 @@ docker compose -f dockerfiles/docker-compose.yaml up \
     --force-recreate \
     --renew-anon-volumes \
     --abort-on-container-exit \
-    mongodb elasticsearch nlp-service proxy-service
+    mongodb worker elasticsearch nlp-service proxy-service

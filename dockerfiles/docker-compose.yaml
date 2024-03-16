@@ -20,7 +20,7 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongodb
 
   elasticsearch:
-    image: elasticsearch:7.17.3
+    image: elasticsearch:7.17.18
     volumes:
       - ../es-db:/var/lib/elasticsearch/data
     environment:
