@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-import SearchResult from "../components/SearchResult";
+import SearchResult, { TSearchResult } from "../components/SearchResult";
 
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  margin-bottom: ${p => p.theme.size.lg};
+  margin-bottom: ${(p) => p.theme.size.lg};
 `;
 
 const Input = styled.input`
-  padding: ${p => p.theme.size.sm};
+  padding: ${(p) => p.theme.size.sm};
   width: 20rem;
 `;
 
@@ -20,22 +20,23 @@ const SubmitBtn = styled.input`
 `;
 
 class Index extends React.Component {
+  state: { value: string; results: TSearchResult[] };
   constructor(props) {
     super(props);
     this.state = { value: "", results: [] };
   }
 
-  handleChange = e => this.setState({ value: e.target.value });
+  handleChange = (e) => this.setState({ value: e.target.value });
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     // Fetch the search results for this query.
     e.preventDefault();
     const res = await fetch("/api/search", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query: this.state.value })
+      body: JSON.stringify({ query: this.state.value }),
     });
     const json = await res.json();
     console.log(json);
@@ -53,7 +54,7 @@ class Index extends React.Component {
         />
         <SubmitBtn type="submit" value="Submit" />
       </Form>
-      {this.state.results.map(result => (
+      {this.state.results.map((result) => (
         <SearchResult key={result._id} {...result} />
       ))}
     </>

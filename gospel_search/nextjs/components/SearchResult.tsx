@@ -17,19 +17,17 @@ const VerseNumber = styled.b`
   margin-right: ${(p) => p.theme.size.xs};
 `;
 
-const SearchResult = ({
-  _id,
-  doc_type,
-  links,
-  month,
-  name,
-  num,
-  parent_id,
-  score,
-  talk_id,
-  text,
-  year,
-}) => (
+export type TSearchResult = {
+  _id: string;
+  doc_type: string;
+  name: string;
+  num: string;
+  parent_id: string;
+  text: string;
+  year: string;
+};
+
+const SearchResult = ({ doc_type, name, num, parent_id, text, year }) => (
   <Container>
     <H4>
       <a href={parent_id}>
