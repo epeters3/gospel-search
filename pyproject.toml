@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "gospel-search"
+version = "0.1.0"
+description = ""
+authors = ["Evan Peterson <evanpeterson17@gmail.com>"]
+license = "UNLICENSED"
+readme = "README.md"
+
+[tool.poe.tasks]
+"gen:reqs" = "bash scripts/gen-reqs.sh"
+build = [
+    { "ref" = "gen:reqs" },
+    { "cmd" = "docker compose -f dockerfiles/docker-compose.yaml build" },
+]
+"start:db" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb mongoui elasticsearch elasticsearchui worker"
+"start:services" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb worker elasticsearch nlp-service proxy-service"
+
+[tool.poetry.dependencies]
+python = "3.12.2"
+fastapi = "^0.110.0"
+tqdm = "^4.66.2"
+numpy = "^1.26.4"
+pymongo = "4.1.1"
+sentence-transformers = "^2.5.1"
+nltk = "^3.8.1"
+scipy = "^1.12.0"
+beautifulsoup4 = "^4.12.3"
+colorlog = "^6.8.2"
+uvicorn = { extras = ["standard"], version = "^0.28.0" }
+fire = "^0.6.0"
+requests = "^2.31.0"
+lxml = "^5.1.0"
+elasticsearch = "^8.12.1"
+
+[tool.poetry.group.nlp-service.dependencies]
+fastapi = "^0.110.0"
+tqdm = "^4.66.2"
+numpy = "^1.26.4"
+pymongo = "4.1.1"
+sentence-transformers = "^2.5.1"
+nltk = "^3.8.1"
+scipy = "^1.12.0"
+beautifulsoup4 = "^4.12.3"
+colorlog = "^6.8.2"
+uvicorn = { extras = ["standard"], version = "^0.28.0" }
+
+[tool.poetry.group.worker.dependencies]
+sentence-transformers = "^2.5.1"
+nltk = "^3.8.1"
+numpy = "^1.26.4"
+scipy = "^1.12.0"
+pymongo = "4.1.1"
+fire = "^0.6.0"
+tqdm = "^4.66.2"
+beautifulsoup4 = "^4.12.3"
+colorlog = "^6.8.2"
+requests = "^2.31.0"
+lxml = "^5.1.0"
+elasticsearch = "^8.12.1"
+uvicorn = "^0.28.0"
+fastapi = "^0.110.0"
+
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.25.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

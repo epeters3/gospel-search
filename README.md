@@ -7,7 +7,8 @@ The architecture of this project is broken up into two separate workflows: the d
 The data transformation pipeline can be started up via:
 
 ```shell
-scripts/start-db.sh
+poetry run poe build
+poetry run poe start:db
 ```
 
 HTTP requests can then be made to the worker service at `http://localhost:8080` to accomplish the steps outlined in the following sequence diagram:
@@ -36,7 +37,8 @@ sequenceDiagram
 Once the embeddings have been saved to the MongoDB instance and the segments have been loaded into the ElasticSearch instance, the search engine application stack can be started via:
 
 ```shell
-scripts/start-service.sh
+poetry run poe build
+poetry run poe start:services
 ```
 
 The front-end UI can then be accessed via `http://localhost:3000`. User requests are handled using this workflow:
