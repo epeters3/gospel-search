@@ -10,3 +10,4 @@ db
 es-db
 requirements
 next-env.d.ts
+.env

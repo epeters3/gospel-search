@@ -2,6 +2,15 @@
 
 The architecture of this project is broken up into two separate workflows: the data transformation pipeline, and the online search engine user experience.
 
+## TL;DR
+
+```shell
+poe build
+poe start:services
+poe populate-es
+open http://localhost:3000
+```
+
 ## Data Transformation Pipeline
 
 The data transformation pipeline can be started up via:
@@ -30,7 +39,7 @@ sequenceDiagram
     Worker->>ElasticSearch: segments
 ```
 
-**Note**: Currently the ElasticSearch index is not persisted across docker image start-ups, so `PUT /populate-es` has to be called every time ElasticSearch starts up. That command only takes 20 or so seconds to run, so its not a big deal right now.
+**Note**: Currently the ElasticSearch index is not persisted across docker image start-ups, so `PUT /populate-es` has to be called every time ElasticSearch starts up. That command only takes 60 or so seconds to run, so its not a big deal right now.
 
 ## Search Engine User Experience
 
