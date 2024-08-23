@@ -7,8 +7,9 @@ The architecture of this project is broken up into two separate workflows: the d
 ```shell
 poe build
 poe start:services
-poe populate-es
-open http://localhost:3000
+# Then in another terminal:
+poe populate-es # not needed once the ES index is persistent
+open http://localhost:3000 # or `poe proxy` for serving prod
 ```
 
 ## Data Transformation Pipeline
