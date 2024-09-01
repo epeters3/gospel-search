@@ -1,7 +1,7 @@
 from fire import Fire
 
 from gospel_search.mongodb.client import db
-from gospel_search.nlp_server.text_embedder import TextEmbedder
+from gospel_search.mongodb.text_embedder import TextEmbedder
 from gospel_search.utils import logger
 
 

@@ -19,39 +19,13 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
       ME_CONFIG_MONGODB_SERVER: mongodb
 
-  elasticsearch:
-    image: elasticsearch:7.17.18
+  # Source: https://abhishektatachar.medium.com/run-chroma-db-on-a-local-machine-and-as-a-docker-container-a9d4b91d2a97
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
     volumes:
-      - ../es-db:/var/lib/elasticsearch/data
-    environment:
-      discovery.type: single-node
-      http.cors.enabled: "true"
-      http.cors.allow-origin: http://elasticsearchui:1358
-      http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
-      http.cors.allow-credentials: "true"
+      - ../chroma_db:/chroma/.chroma/index
     ports:
-    - 9200:9200
-  
-  elasticsearchui:
-    image: appbaseio/dejavu:3.6.0
-    ports:
-    - 1358:1358
-    depends_on:
-      - elasticsearch
-  
-  nlp-service:
-    image: gospel-search-nlp-service
-    build:
-      context: ..
-      dockerfile: dockerfiles/nlp-service.Dockerfile
-    depends_on:
-    - mongodb
-    volumes:
-    - ~/.cache/torch:/root/.cache/torch
-    environment:
-      DB_HOST: mongodb
-      DB_USERNAME: root
-      DB_PASSWORD: password
+      - 8000:8000
   
   proxy-service:
     image: gospel-search-proxy-service
@@ -59,13 +33,12 @@ services:
       context: ..
       dockerfile: dockerfiles/proxy-service.Dockerfile
     depends_on:
-      - elasticsearch
-      - nlp-service
+      - chroma
     ports:
     - 3000:3000
     environment:
-      ES_HOST: http://elasticsearch:9200
-      NLP_HOST: http://nlp-service:8080
+      CHROMA_HOST: chroma
+      CHROMA_PORT: 8000
       OPENAI_API_KEY: ${OPENAI_API_KEY}
 
   worker:
@@ -82,7 +55,7 @@ services:
               capabilities: [gpu]
     depends_on:
       - mongodb
-      - elasticsearch
+      - chroma
     ports:
     - 8080:8080
     volumes:
@@ -91,4 +64,5 @@ services:
       DB_HOST: mongodb
       DB_USERNAME: root
       DB_PASSWORD: password
-      ES_HOST: http://elasticsearch:9200
+      CHROMA_HOST: chroma
+      CHROMA_PORT: 8000

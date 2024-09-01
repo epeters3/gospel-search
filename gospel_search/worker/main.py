@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from gospel_search.elasticsearch.import_segments import import_docs
+from gospel_search.chroma.import_segments import import_docs
 from gospel_search.mongodb.compute_embeddings import compute_embeddings
 from gospel_search.mongodb.extract_segments import extract_segments
 
@@ -33,7 +33,7 @@ def extract(cfg: ExtractSegmentsConfig):
     crawled by the `crawl` step. Saves the results to the `segments` table in
     the `gospel_search` database.
     """
-    extract_segments(**cfg.dict())
+    extract_segments(**cfg.model_dump())
 
 
 @app.put("/embed")
@@ -42,10 +42,10 @@ def embed(cfg: ComputeEmbeddingsConfig):
     Computes and saves sentence embeddings for all the segments in the
     `segments` MongoDB table that don't already have embeddings.
     """
-    compute_embeddings(**cfg.dict())
+    compute_embeddings(**cfg.model_dump())
 
 
-@app.put("/populate-es")
-def populate_es(cfg: ImportDocsConfig):
-    """Loads all the segments from MongoDB into the ElasticSearch instance."""
-    import_docs(**cfg.dict())
+@app.put("/populate-chroma")
+def populate_chroma(cfg: ImportDocsConfig):
+    """Loads all the segments from MongoDB into Chroma DB."""
+    import_docs(**cfg.model_dump())

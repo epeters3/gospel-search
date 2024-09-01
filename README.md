@@ -8,7 +8,7 @@ The architecture of this project is broken up into two separate workflows: the d
 poe build
 poe start:services
 # Then in another terminal:
-poe populate-es # not needed once the ES index is persistent
+poe populate-chroma # only needed if there's new data to index.
 open http://localhost:3000 # or `poe proxy` for serving prod
 ```
 
@@ -71,7 +71,6 @@ sequenceDiagram
 - `gospel_search/elasticsearch/`: The code related to the ElasticSearch search engine server.
 - `gospel_search/mongodb/`: The code related to the MongoDB database which stores all the segments and embedding vectors.
 - `gospel_search/ui`: The code for the proxy server and user interface.
-- `gospel_search/nlp_server`: The code for the NLP paragraph embedding re-ranking server.
 - `gospel_search/web_scraping`: The code for the HTML scraper.
 - `gospel_search/worker`: The code for the worker server which runs all the ETL tasks.
 

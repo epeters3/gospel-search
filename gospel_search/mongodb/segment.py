@@ -90,37 +90,13 @@ def write_segments(segments: t.List[Segment]) -> None:
     db.segments.insert_many([segment.d for segment in segments])
 
 
-def get_segments_by_document(*, include_embeddings: bool = False) -> t.Dict[str, dict]:
+def get_all_segments():
     """
-    Collects all segments for each conference talk or scripture chapter into a
-    single document, returning all documents as items in a dictionary, mapped
-    from their document id.
+    Streams all segments from MongoDB.
     """
     segments_collection = db.segments
-    documents: t.Dict[str, dict] = defaultdict(lambda: {"segments": []})
-
-    logger.info("preprocessing segments into documents...")
     for segment in tqdm(
         segments_collection.find(), total=segments_collection.count_documents(filter={})
-    ):
-        document = documents[segment["parent_id"]]
-        if include_embeddings:
-            # Mongodb stores the embedding as a raw list, not a numpy array.
-            try:
-                segment["embedding"] = np.fromiter(segment["embedding"], np.float32)
-            except Exception as e:
-                logger.error(segment)
-                raise e
-        else:
-            segment.pop("embedding")
-
-        document["segments"].append(segment)
-
-    for doc_id, document in documents.items():
-        # Store the document's id in the document itself so the
-        # document can be fully self-contained.
-        document["_id"] = doc_id
-        # Sort the segments of each document to make sure they're in order.
-        document["segments"].sort(key=lambda s: s["num"])
-
-    return documents
+    ):  
+        segment.pop("embedding")
+        yield segment

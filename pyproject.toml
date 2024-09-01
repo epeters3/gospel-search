@@ -12,9 +12,9 @@ build = [
     { "ref" = "gen:reqs" },
     { "cmd" = "docker compose -f dockerfiles/docker-compose.yaml build" },
 ]
-"start:db" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb mongoui elasticsearch elasticsearchui worker"
-"start:services" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb worker elasticsearch nlp-service proxy-service"
-populate-es = "curl -X PUT -H 'Content-Type: application/json' --data '{\"overwrite\": true}' localhost:8080/populate-es"
+"start:db" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb mongoui chroma worker"
+"start:services" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb worker chroma proxy-service"
+populate-chroma = "curl -X PUT -H 'Content-Type: application/json' --data '{}' localhost:8080/populate-chroma"
 
 [tool.poe.tasks.proxy]
 cmd = "ngrok http --domain=${NGROK_DOMAIN} 3000 --oauth google --oauth-allow-email ${EMAIL_ALLOW_LIST}"
@@ -35,7 +35,6 @@ uvicorn = { extras = ["standard"], version = "^0.28.0" }
 fire = "^0.6.0"
 requests = "^2.31.0"
 lxml = "^5.1.0"
-elasticsearch = "^8.12.1"
 
 [tool.poetry.group.nlp-service.dependencies]
 fastapi = "^0.110.0"
@@ -61,10 +60,9 @@ beautifulsoup4 = "^4.12.3"
 colorlog = "^6.8.2"
 requests = "^2.31.0"
 lxml = "^5.1.0"
-elasticsearch = "^8.12.1"
 uvicorn = "^0.28.0"
 fastapi = "^0.110.0"
-
+chromadb = "^0.5.5"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.25.0"
