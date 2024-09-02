@@ -1,9 +1,9 @@
 import os
 from typing import Generator, Sequence, cast
-from chromadb import EmbeddingFunction, HttpClient
+from chromadb import EmbeddingFunction, HttpClient, Metadata
 from chromadb.utils.embedding_functions.sentence_transformer_embedding_function import SentenceTransformerEmbeddingFunction
 
-from gospel_search.api.types import SearchResults
+from gospel_search.api.types import SearchResult, SearchResults
 
 
 SEGMENTS = "segments"
@@ -31,7 +31,13 @@ class Chroma:
         data = res["metadatas"]
         if not data:
             return SearchResults(results=[])
-        return SearchResults(results=data[0])
+        return SearchResults(results=[self._metadata_to_search_result(d) for d in data[0]])
+    
+    def _metadata_to_search_result(self, metadata: Metadata):
+        # Pydantic doesn't support fields that start with an underscore, and the "_id"
+        # field is an artifact from the MongoDB days of this project.
+        segment = {**metadata, "id": metadata["_id"]}
+        return SearchResult.model_validate({"segment": segment})
 
 
 def chunk[T](data: Sequence[T], n):
