@@ -17,9 +17,7 @@ Link: ${segment.parent_id}
 
 llm = ChatOpenAI(model='gpt-4o-2024-08-06')
 
-def Retriever(*, k: int):
-    chroma = Chroma()
-
+def Retriever(*, k: int, chroma: Chroma):
     @chain
     def retrieve(input):
         res = chroma.search(input["query"], k)
@@ -47,4 +45,5 @@ Related scripture verses and conference talk paragraphs:
     ]
 )
 
-qa_chain = {"query": RunnablePassthrough(), "results": Retriever(k=10)} | prompt | llm | StrOutputParser()
+def get_qa_chain(chroma: Chroma):
+    return {"query": RunnablePassthrough(), "results": Retriever(k=25, chroma=chroma)} | prompt | llm | StrOutputParser()
