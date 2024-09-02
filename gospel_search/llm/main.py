@@ -10,7 +10,7 @@ from gospel_search.chroma.client import Chroma
 
 def stringify_search_result(result: SearchResult) -> str:
     segment = result.segment
-    return f"""Reference name: {segment.name}
+    return f"""Name: {segment.name}
 Text: ${segment.text}
 Link: ${segment.parent_id}
 """
@@ -35,6 +35,10 @@ related to the gospel of the Church of Jesus Christ of Latter-day Saints.
 Only answer gospel and doctrine-related questions. Here are some retrieved
 scripture verses and general conference talk paragraphs related to the user's
 query. Use them to answer the user's question.
+
+Always cite your sources using inline citations. Every reference has a name and
+a link. Cite your sources inline using markdown link format like so:
+`[Name](Link)`.
 
 Related scripture verses and conference talk paragraphs:
 

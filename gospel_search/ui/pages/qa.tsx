@@ -1,4 +1,5 @@
 import React from "react";
+import Markdown from 'react-markdown'
 import { Form, Input, SubmitBtn } from "../components/SearchBar";
 
 class QA extends React.Component {
@@ -15,7 +16,7 @@ class QA extends React.Component {
     e.preventDefault();
     const res = await fetch("/api/qa?" + new URLSearchParams({
       query: this.state.query,
-  }).toString(), {
+    }).toString(), {
       method: "GET",
     });
     const json = await res.json();
@@ -33,7 +34,7 @@ class QA extends React.Component {
         />
         <SubmitBtn type="submit" value="Submit" />
       </Form>
-      {this.state.answer ? <p style={{whiteSpace: 'pre-wrap'}}>{this.state.answer}</p> : null}
+      {this.state.answer ? <Markdown>{this.state.answer}</Markdown> : null}
     </>
   );
 }
