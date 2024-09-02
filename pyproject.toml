@@ -10,10 +10,11 @@ readme = "README.md"
 "gen:reqs" = "bash scripts/gen-reqs.sh"
 build = [
     { "ref" = "gen:reqs" },
+    { "cmd" = "npm run build" },
     { "cmd" = "docker compose -f dockerfiles/docker-compose.yaml build" },
 ]
-"start:db" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb mongoui chroma worker"
-"start:services" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit mongodb worker chroma proxy-service"
+"start:db" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit chroma worker"
+"start:services" = "docker compose -f dockerfiles/docker-compose.yaml up --abort-on-container-exit chroma api"
 populate-chroma = "curl -X PUT -H 'Content-Type: application/json' --data '{}' localhost:8080/populate-chroma"
 
 [tool.poe.tasks.proxy]
@@ -36,18 +37,6 @@ fire = "^0.6.0"
 requests = "^2.31.0"
 lxml = "^5.1.0"
 
-[tool.poetry.group.nlp-service.dependencies]
-fastapi = "^0.110.0"
-tqdm = "^4.66.2"
-numpy = "^1.26.4"
-pymongo = "4.1.1"
-sentence-transformers = "^2.5.1"
-nltk = "^3.8.1"
-scipy = "^1.12.0"
-beautifulsoup4 = "^4.12.3"
-colorlog = "^6.8.2"
-uvicorn = { extras = ["standard"], version = "^0.28.0" }
-
 [tool.poetry.group.worker.dependencies]
 sentence-transformers = "^2.5.1"
 nltk = "^3.8.1"
@@ -63,6 +52,8 @@ lxml = "^5.1.0"
 uvicorn = "^0.28.0"
 fastapi = "^0.110.0"
 chromadb = "^0.5.5"
+langchain = "^0.2.15"
+langchain-openai = "^0.1.23"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.25.0"

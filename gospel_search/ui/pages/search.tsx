@@ -15,15 +15,13 @@ class Search extends React.Component {
   handleSubmit = async (e) => {
     // Fetch the search results for this query.
     e.preventDefault();
-    const res = await fetch("/api/search", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: this.state.value }),
+    const res = await fetch("/api/search?" + new URLSearchParams({
+      query: this.state.value,
+  }).toString(), {
+      method: "GET",
     });
     const json = await res.json();
-    this.setState({ results: json.result });
+    this.setState({ results: json.results });
   };
 
   render = () => (

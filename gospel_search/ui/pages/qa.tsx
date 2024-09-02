@@ -13,12 +13,10 @@ class QA extends React.Component {
   handleSubmit = async (e) => {
     // Fetch the search results for this query.
     e.preventDefault();
-    const res = await fetch("/api/qa", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: this.state.query }),
+    const res = await fetch("/api/qa?" + new URLSearchParams({
+      query: this.state.query,
+  }).toString(), {
+      method: "GET",
     });
     const json = await res.json();
     this.setState({ answer: json.answer });

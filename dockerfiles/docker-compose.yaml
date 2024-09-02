@@ -1,24 +1,5 @@
 services:
 
-  mongodb:
-    image: mongo
-    volumes:
-      - ../db:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-
-  mongoui:
-    image: mongo-express
-    ports:
-    - 8081:8081
-    depends_on:
-    - mongodb
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password
-      ME_CONFIG_MONGODB_SERVER: mongodb
-
   # Source: https://abhishektatachar.medium.com/run-chroma-db-on-a-local-machine-and-as-a-docker-container-a9d4b91d2a97
   chroma:
     image: ghcr.io/chroma-core/chroma:latest
@@ -27,11 +8,18 @@ services:
     ports:
       - 8000:8000
   
-  proxy-service:
-    image: gospel-search-proxy-service
+  api:
+    image: gospel-search-api
     build:
       context: ..
-      dockerfile: dockerfiles/proxy-service.Dockerfile
+      dockerfile: dockerfiles/api.Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     depends_on:
       - chroma
     ports:
@@ -54,14 +42,12 @@ services:
               count: 1
               capabilities: [gpu]
     depends_on:
-      - mongodb
       - chroma
     ports:
     - 8080:8080
     volumes:
     - ~/.cache/torch:/root/.cache/torch
     environment:
-      DB_HOST: mongodb
       DB_USERNAME: root
       DB_PASSWORD: password
       CHROMA_HOST: chroma

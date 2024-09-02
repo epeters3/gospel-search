@@ -1,7 +1,17 @@
-module.exports = {
-  serverRuntimeConfig: {
-    // Will only be available on the server side
-    ES_HOST: "http://localhost:9200", // Host URL of the ElasticSearch instance
-    NLP_HOST: "http://localhost:5000" // Host URL of the Natural Language Processing reranking server.
-  }
-};
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  output: 'export',
+
+  // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
+  // trailingSlash: true,
+
+  // Optional: Prevent automatic `/me` -> `/me/`, instead preserve `href`
+  // skipTrailingSlashRedirect: true,
+
+  // Optional: Change the output directory `out` -> `dist`
+  distDir: 'dist',
+}
+
+module.exports = nextConfig

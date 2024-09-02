@@ -6,7 +6,7 @@ set -eo pipefail
 # runtime python dependencies.
 
 dir=$(dirname "$0") # this script's directory
-declare -a dep_groups=("nlp-service" "worker")
+declare -a dep_groups=("worker")
 
 for group in "${dep_groups[@]}"
 do
