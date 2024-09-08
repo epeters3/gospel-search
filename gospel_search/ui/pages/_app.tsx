@@ -1,7 +1,13 @@
 import App from "next/app";
 import Head from "next/head";
 import React from "react";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import { CssBaseline } from "@mui/material";
 
 const theme = {
   dark: "#262832",
@@ -48,17 +54,21 @@ export default class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Head>
-          <title>Gospel Search</title>
-        </Head>
-        <Page>
-          <Main>
-            <Component {...pageProps} />
-          </Main>
-        </Page>
-      </ThemeProvider>
+      <>
+        <CssBaseline />
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Head>
+            <title>Gospel Search</title>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+          <Page>
+            <Main>
+              <Component {...pageProps} />
+            </Main>
+          </Page>
+        </ThemeProvider>
+      </>
     );
   }
 }
