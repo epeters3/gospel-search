@@ -58,8 +58,7 @@ def compose_answer(state: ChainState):
     if "answer" not in state or "results" not in state:
         raise ValueError("answer and results required")
     answer = state["answer"]
-    id_matches: list[str] = re.findall(r"\[.+?\]", answer)
-    ids = {id[1:-1] for id in id_matches}  # remove the brackets
+    ids: list[str] = re.findall(r'\[<cite>\]\((https?://[^\)]+)\)', answer)
     references = [r for r in state["results"] if r.segment.id in ids]
     return AnswerResult(answer=answer, references=references)
 
@@ -77,8 +76,10 @@ general conference talk paragraphs related to the user's query. Use them
 to answer the user's question.
 
 Always cite your sources using inline citations. Every reference has an an ID. 
-Cite your sources inline using square brackets around the source's full ID like
-so: `[ID]`.
+Cite your sources inline using markdown link syntax, with the literal string `<cite>`
+as the link text, and the ID value as the href. For example:
+`[<cite>](https://www.churchofjesuschrist.org/study/general-conference/2016/10/fourth-floor-last-door.26)`, or
+`[<cite>](https://www.churchofjesuschrist.org/study/scriptures/nt/heb/11.1)`.
 
 Related scripture verses and conference talk paragraphs:
 

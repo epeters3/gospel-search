@@ -3,6 +3,7 @@ import Markdown from "react-markdown";
 import { Form, Input, SubmitBtn } from "../components/SearchBar";
 import { SearchResult } from "../components/SearchResult";
 import { Reference } from "../components/Reference";
+import { Link } from "@mui/material";
 
 const AgentResponse = ({
   answer,
@@ -11,24 +12,28 @@ const AgentResponse = ({
   answer: string;
   references: SearchResult[];
 }) => {
-  const parsed = answer.split(/(\[.+?\])/g); // includes capturing group parentheses
   return (
-    <>
-      {parsed.map((part) => {
-        // TODO: just have the AI generate the references in markdown link format
-        // and pass a custom renderer to `react-markdown` instead.
-        if (part.match(/\[.+?\]/g)) {
-          const id = part.slice(1, -1); // remove the brackets
-          const reference = references.find((r) => r.segment.id === id);
-          if (!reference) {
-            console.error(`Could find no reference by ID ${id}`);
-            return undefined;
+    <Markdown
+      components={{
+        a: ({ href, children }) => {
+          if (children === "<cite>") {
+            const reference = references.find((r) => r.segment.id === href);
+            if (!reference) {
+              console.error(`Could find no reference by ID '${href}'`);
+              return undefined;
+            }
+            return <Reference result={reference} />;
           }
-          return <Reference result={reference} />;
-        }
-        return <Markdown components={{ p: "span" }}>{part}</Markdown>;
-      })}
-    </>
+          return (
+            <Link href={href} target="_blank" rel="noopener">
+              {children}
+            </Link>
+          );
+        },
+      }}
+    >
+      {answer}
+    </Markdown>
   );
 };
 
