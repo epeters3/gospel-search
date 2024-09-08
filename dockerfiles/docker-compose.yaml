@@ -1,5 +1,4 @@
 services:
-
   # Source: https://abhishektatachar.medium.com/run-chroma-db-on-a-local-machine-and-as-a-docker-container-a9d4b91d2a97
   chroma:
     image: ghcr.io/chroma-core/chroma:latest
@@ -7,12 +6,14 @@ services:
       - ../chroma_db:/chroma/.chroma/index
     ports:
       - 8000:8000
-  
+
   api:
     image: gospel-search-api
     build:
       context: ..
       dockerfile: dockerfiles/api.Dockerfile
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
     deploy:
       resources:
         reservations:
@@ -23,7 +24,7 @@ services:
     depends_on:
       - chroma
     ports:
-    - 3000:3000
+      - 3000:3000
     environment:
       CHROMA_HOST: chroma
       CHROMA_PORT: 8000
@@ -44,9 +45,9 @@ services:
     depends_on:
       - chroma
     ports:
-    - 8080:8080
+      - 8080:8080
     volumes:
-    - ~/.cache/torch:/root/.cache/torch
+      - ~/.cache/torch:/root/.cache/torch
     environment:
       DB_USERNAME: root
       DB_PASSWORD: password
