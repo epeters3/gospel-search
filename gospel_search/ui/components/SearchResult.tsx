@@ -25,57 +25,53 @@ type BaseSegment = {
   name: string;
   links: string[];
   score: number;
-}
+};
 
-type TalkSegment = BaseSegment & {
-  doc_type: "general-conference"
+export type TalkSegment = BaseSegment & {
+  doc_type: "general-conference";
   talk_id: string;
   month: number;
   year: number;
-}
+};
 
-type VerseSegment = BaseSegment & {
-  doc_type: "scriptures"
-}
+export type VerseSegment = BaseSegment & {
+  doc_type: "scriptures";
+};
 
-type Segment = TalkSegment | VerseSegment
+export type Segment = TalkSegment | VerseSegment;
 
 export type SearchResult = {
   segment: Segment;
-}
+};
 
 const TalkSegmentCard = ({ parent_id, text, year, name }: TalkSegment) => (
   <Container>
     <H4>
-      <a href={parent_id}>{name}
-      </a>
+      <a href={parent_id}>{name}</a>
     </H4>
 
-    <Text>
-      {text}
-    </Text>
-    <i>
-      {`${year} Conference Talk`}
-    </i>
+    <Text>{text}</Text>
+    <i>{`${year} Conference Talk`}</i>
   </Container>
-)
+);
 
 const VerseSegmentCard = ({ parent_id, name, num, text }: VerseSegment) => (
   <Container>
     <H4>
-      <a href={parent_id}>
-        {`${name}:${num}`}
-      </a>{" "}
+      <a href={parent_id}>{`${name}:${num}`}</a>{" "}
     </H4>
 
     <Text>
       <VerseNumber> {num}</VerseNumber>
       {text}
     </Text>
-    <i>
-      {"Scripture"}
-    </i>
+    <i>{"Scripture"}</i>
   </Container>
-)
+);
 
-export const SearchResultCard = ({ result }: { result: SearchResult }) => result.segment.doc_type === "scriptures" ? <VerseSegmentCard {...result.segment} /> : <TalkSegmentCard {...result.segment} />
+export const SearchResultCard = ({ result }: { result: SearchResult }) =>
+  result.segment.doc_type === "scriptures" ? (
+    <VerseSegmentCard {...result.segment} />
+  ) : (
+    <TalkSegmentCard {...result.segment} />
+  );
